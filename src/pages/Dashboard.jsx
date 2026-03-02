@@ -27,7 +27,9 @@ export default function Dashboard() {
           {isDashboardHome && (
             <div className="dashboard-stats-grid">
               <div className="dashboard-stat-card">
-                <div className="stat-number">{countByCategory("SOP")}</div>
+                <div className="stat-number">
+                  {countByCategory("Media Releases")}
+                </div>
                 <div className="stat-label">Media Releases</div>
               </div>
 

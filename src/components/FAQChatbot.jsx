@@ -12,7 +12,7 @@ export default function FAQChatbot() {
   ]);
   const [input, setInput] = useState("");
 
-  // daftar FAQ (kamu bisa tambah sesuai kebutuhan)
+  // daftar FAQ
   const faqData = [
     {
       question: "cara login",
@@ -50,7 +50,7 @@ export default function FAQChatbot() {
     },
   ];
 
-  // fungsi cari jawaban FAQ berdasarkan keyword
+  // jawaban FAQ berdasarkan keyword
   const findAnswer = (userInput) => {
     const text = userInput.toLowerCase();
 
@@ -78,7 +78,6 @@ export default function FAQChatbot() {
 
   return (
     <div>
-      {/* tombol bubble */}
       <button className="chatbot-bubble" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? (
           "✖"
@@ -87,7 +86,6 @@ export default function FAQChatbot() {
         )}
       </button>
 
-      {/* box chatbot */}
       {isOpen && (
         <div className="chatbot-container">
           <div className="chatbot-header">

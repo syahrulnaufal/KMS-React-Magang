@@ -1,4 +1,5 @@
 import "../../styles/consulting.css";
+
 import {
   Server,
   Users,
@@ -7,6 +8,9 @@ import {
   CheckCircle,
   Workflow,
   Smartphone,
+  Code2,
+  Presentation,
+  UserCheck,
 } from "lucide-react";
 
 export default function Consulting() {
@@ -53,21 +57,18 @@ export default function Consulting() {
         <div className="rbs-consult-wrapper">
           {/* LEFT */}
           <div className="rbs-consult-left">
+            <h2>Readymix Consulting</h2>
             <p className="rbs-consult-subtitle">
-              Konsultasikan bisnis readymix Anda dengan Tim Ahli Kami
+              Konsultasikan bisnis readymix Anda dengan Tim Ahli dari Kami!
             </p>
 
-            <h2>
-              Konsultan Readymix Kami sudah Membantu Perusahaan Memaksimalkan
-              Potensinya
-            </h2>
-
             <p className="rbs-consult-desc">
-              Manajemen order, manajemen stock, manajemen kualitas produk adalah
-              sedikit dari beberapa faktor yang mempengaruhi produktivitas
-              perusahaan Anda. Dengan bantuan konsultan kami dan Software
-              manajemen RBS ini, Anda juga dapat memaksimalkan potensi
-              perusahaan Anda.
+              Kami menyediakan layanan strategis dan solusi bisnis yang dipandu
+              Expert dari pelaku Readymix dengan pengalaman >10 tahun. Dengan
+              pengetahuan mendalam tentang lanskap industri readymix di
+              Indonesia dan pengalaman yang luas, kami membantu klien kami
+              mencapai keunggulan kompetitif, mengoptimalkan operasional mereka,
+              dan mencapai pertumbuhan yang berkelanjutan
             </p>
           </div>
 

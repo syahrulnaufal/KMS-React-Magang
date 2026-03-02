@@ -47,6 +47,22 @@ export default function PublicDashboard() {
     (item) => item.status?.toLowerCase() === "published"
   );
   const [showVideo, setShowVideo] = useState(false);
+  const formatDate = (dateString) => {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
 
   /* ================= HEADER SCROLL EFFECT ================= */
   useEffect(() => {
@@ -306,71 +322,69 @@ export default function PublicDashboard() {
         </div>
       </section>
       {/* ================= LATEST UPDATES SECTION ================= */}
-      <section
-        className="petronas-updates-section"
-        style={{
-          backgroundRepeat: "repeat",
-          backgroundSize: "420px",
-          backgroundBlendMode: "soft-light",
-          backgroundPosition: "top",
-        }}
-      >
-        <div className="petronas-updates-container">
+      <section className="rbs-latest-section">
+        <div className="rbs-latest-container">
           {/* HEADER */}
-          <div className="petronas-updates-header">
-            <div className="petronas-updates-header-row">
-              <h2 className="petronas-updates-title">
-                Latest <span>Updates</span>
-              </h2>
+          <div className="rbs-latest-header">
+            <h2>
+              Latest <span>Updates</span>
+            </h2>
 
-              {/* ✅ VIEW ALL KE HALAMAN BARU */}
-              <button
-                className="petronas-viewall-btn top"
-                onClick={() => navigate("/latest-updates")}
-              >
-                <FaArrowRight />
-                View all
-              </button>
-            </div>
-
-            <p className="petronas-updates-subtitle">
-              Stay informed with our latest media releases, featuring key
-              announcements, insights,
-              <br />
-              and developments.
+            <p className="rbs-latest-subtitle">
+              Stay informed with our latest media releases, article, and
+              announcements.
             </p>
+
+            <button
+              className="rbs-latest-viewall"
+              onClick={() => navigate("/latest-updates")}
+            >
+              View All <FaArrowRight />
+            </button>
           </div>
 
-          {/* SLIDER AUTO */}
-          <div
-            className="petronas-updates-slider auto-scroll"
-            ref={updatesSliderRef}
-          >
+          {/* SLIDER */}
+          <div className="rbs-latest-slider" ref={updatesSliderRef}>
             {publishedList.length > 0 ? (
-              [...publishedList, ...publishedList].map((item, index) => (
-                <div key={index} className="petronas-news-card">
-                  <div className="petronas-news-thumb">
+              publishedList.map((item) => (
+                <div key={item.id} className="rbs-news-card">
+                  <div className="rbs-news-image">
                     {item.thumbnail ? (
                       <img src={item.thumbnail} alt={item.title} />
                     ) : (
-                      <div className="petronas-thumb-empty">No Thumbnail</div>
+                      <div className="rbs-no-thumb">No Thumbnail</div>
                     )}
                   </div>
 
-                  <button
-                    className="petronas-news-readmore"
-                    onClick={() => navigate(`/knowledge/${item.id}`)}
-                  >
-                    <FaArrowRight /> Read more
-                  </button>
+                  <div className="rbs-news-content">
+                    <div className="rbs-news-meta">
+                      <span className="rbs-news-date">
+                        {formatDate(item.createdAt)}
+                      </span>
 
-                  <div className="petronas-news-overlay">
-                    <p className="petronas-news-date">
-                      {item.date || "22 January 2026"}
+                      <span className="rbs-news-category">
+                        {item.category?.toUpperCase() || "MEDIA RELEASE"}
+                      </span>
+                    </div>
+
+                    <h4 className="rbs-news-title">
+                      {item.title || "(Tanpa Judul)"}
+                    </h4>
+
+                    <p className="rbs-news-excerpt">
+                      {item.content
+                        ? stripHtml(item.content).length > 140
+                          ? stripHtml(item.content).substring(0, 140) + "..."
+                          : stripHtml(item.content)
+                        : "Tidak ada deskripsi."}
                     </p>
 
-                    <h3 className="petronas-news-title">{item.title}</h3>
-                    <p className="petronas-news-type">Media Release</p>
+                    <button
+                      className="rbs-news-btn"
+                      onClick={() => navigate(`/knowledge/${item.id}`)}
+                    >
+                      Read More →
+                    </button>
                   </div>
                 </div>
               ))

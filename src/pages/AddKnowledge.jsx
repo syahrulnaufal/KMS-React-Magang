@@ -284,9 +284,9 @@ export default function AddKnowledge() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="SOP">SOP</option>
-              <option value="Lesson Learned">Lesson Learned</option>
-              <option value="Teknis">Teknis</option>
+              <option value="Media Releases">Media Releases</option>
+              <option value="Article">Article</option>
+              <option value="Announcement">Announcement</option>
             </select>
           </div>
 
