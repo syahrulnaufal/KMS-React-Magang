@@ -1,61 +1,103 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
+import "./quillFonts";
 
-// Pages
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Knowledge from "./pages/Knowledge";
-import AddKnowledge from "./pages/AddKnowledge";
-import EditKnowledge from "./pages/EditKnowledge";
-import ManageUsers from "./pages/ManageUsers";
+import PublicLayout from "./layouts/PublicLayout";
+
+// PUBLIC PAGES
 import PublicDashboard from "./pages/PublicDashboard";
 import PublicKnowledgeDetail from "./pages/PublicKnowledgeDetail";
-import Unauthorized from "./pages/Unauthorized";
 import AboutDetail from "./pages/AboutDetail";
 import SaaS from "./pages/business/SaaS";
 import Hardware from "./pages/business/Hardware";
 import Consulting from "./pages/business/Consulting";
 import LatestUpdates from "./pages/LatestUpdates";
 import FullVideo from "./pages/FullVideo";
+import PublicSystems from "./pages/PublicSystems";
+import SystemDetail from "./pages/SystemDetail";
 
-// Protected Route
+// AUTH
+import Login from "./pages/Login";
+import Unauthorized from "./pages/Unauthorized";
+
+// ADMIN
+import Dashboard from "./pages/Dashboard";
+import Knowledge from "./pages/Knowledge";
+import AddKnowledge from "./pages/AddKnowledge";
+import EditKnowledge from "./pages/EditKnowledge";
+import ManageUsers from "./pages/ManageUsers";
+import Systems from "./pages/Systems";
+import Features from "./pages/Features";
+
+// PROTECTED ROUTE
 import ProtectedRoute from "./auth/ProtectedRoute";
-import FAQChatbot from "./components/FAQChatbot";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Landing */}
-        <Route path="/" element={<PublicDashboard />} />
+        {/* ================= PUBLIC AREA ================= */}
+        <Route element={<PublicLayout />}>
+          {/* LANDING PAGE */}
+          <Route path="/" element={<PublicDashboard />} />
+          <Route path="/public" element={<PublicDashboard />} />
 
-        {/* Public */}
-        <Route path="/public" element={<PublicDashboard />} />
-        <Route
-          path="/public/knowledge/:id"
-          element={<PublicKnowledgeDetail />}
-        />
+          {/* DOCUMENTATION */}
+          <Route path="/panduan-sistem" element={<PublicSystems />} />
 
-        {/* Auth */}
+          {/* KNOWLEDGE DETAIL */}
+          <Route
+            path="/public/knowledge/:id"
+            element={<PublicKnowledgeDetail />}
+          />
+
+          <Route path="/knowledge/:id" element={<PublicKnowledgeDetail />} />
+
+          {/* COMPANY */}
+          <Route path="/about-detail" element={<AboutDetail />} />
+
+          {/* BUSINESS */}
+          <Route path="/business/saas" element={<SaaS />} />
+          <Route path="/business/hardware" element={<Hardware />} />
+          <Route path="/business/consulting" element={<Consulting />} />
+
+          {/* OTHER */}
+          <Route path="/latest-updates" element={<LatestUpdates />} />
+          <Route path="/watch-video" element={<FullVideo />} />
+          <Route path="/systems" element={<PublicSystems />} />
+          <Route path="/systems/:id" element={<SystemDetail />} />
+        </Route>
+
+        {/* ================= AUTH ================= */}
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Other Pages */}
-        <Route path="/about-detail" element={<AboutDetail />} />
-        <Route path="/business/saas" element={<SaaS />} />
-        <Route path="/business/hardware" element={<Hardware />} />
-        <Route path="/business/consulting" element={<Consulting />} />
-        <Route path="/latest-updates" element={<LatestUpdates />} />
-        <Route path="/knowledge/:id" element={<PublicKnowledgeDetail />} />
-        <Route path="/watch-video" element={<FullVideo />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        {/* Protected Dashboard (admin + superadmin) */}
+        {/* ================= ADMIN PROTECTED ================= */}
+
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/systems"
+          element={
+            <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
+              <Systems />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/features"
+          element={
+            <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
+              <Features />
             </ProtectedRoute>
           }
         />
@@ -83,16 +125,6 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
               <EditKnowledge />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* SUPERADMIN */}
-        <Route
-          path="/manage-users"
-          element={
-            <ProtectedRoute allowedRoles={["superadmin"]}>
-              <ManageUsers />
             </ProtectedRoute>
           }
         />

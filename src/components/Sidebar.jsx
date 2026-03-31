@@ -1,56 +1,84 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { LayoutDashboard, BookOpen, Users, LogOut } from "lucide-react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+  LayoutDashboard,
+  BookOpen,
+  Users,
+  LogOut,
+  Layers,
+  FolderTree,
+  Image,
+} from "lucide-react";
 import { useAuth } from "../auth/AuthContext";
 import logo from "../assets/logo.png";
 import "../styles/sidebar.css";
 
 export default function Sidebar() {
-  const { user, logout } = useAuth(); // ambil user juga
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate("/login", { replace: true });
   };
 
+  const isDashboard = location.pathname === "/dashboard";
+  const isKnowledge = location.pathname.startsWith("/knowledge");
+  const isUsers = location.pathname.startsWith("/users");
+  const isSystems = location.pathname.startsWith("/systems");
+  const isFeatures = location.pathname.startsWith("/features");
+  const isMedia = location.pathname.startsWith("/media");
+
   return (
     <aside className="kms-sidebar">
-      {/* LOGO */}
       <div className="kms-sidebar-header">
         <div className="sidebar-brand">
           <img src={logo} alt="RBS Logo" />
         </div>
       </div>
 
-      {/* MENU */}
       <nav className="kms-sidebar-menu">
+        {/* DASHBOARD */}
         <NavLink
           to="/dashboard"
-          className={({ isActive }) =>
-            isActive ? "kms-menu-item active" : "kms-menu-item"
-          }
+          className={`kms-menu-item ${isDashboard ? "active" : ""}`}
         >
           <LayoutDashboard size={18} />
           <span>Dashboard</span>
         </NavLink>
 
+        {/* CONTENT */}
         <NavLink
           to="/knowledge"
-          className={({ isActive }) =>
-            isActive ? "kms-menu-item active" : "kms-menu-item"
-          }
+          className={`kms-menu-item ${isKnowledge ? "active" : ""}`}
         >
           <BookOpen size={18} />
-          <span>Knowledge</span>
+          <span>Content</span>
         </NavLink>
 
-        {/* HANYA SUPERADMIN BISA LIHAT MENU INI */}
+        {/* SYSTEM MANAGEMENT */}
+        <NavLink
+          to="/systems"
+          className={`kms-menu-item ${isSystems ? "active" : ""}`}
+        >
+          <Layers size={18} />
+          <span>Systems</span>
+        </NavLink>
+
+        {/* FEATURE MANAGEMENT */}
+        <NavLink
+          to="/features"
+          className={`kms-menu-item ${isFeatures ? "active" : ""}`}
+        >
+          <FolderTree size={18} />
+          <span>Features</span>
+        </NavLink>
+
+        {/* USERS */}
         {user?.role === "superadmin" && (
           <NavLink
             to="/users"
-            className={({ isActive }) =>
-              isActive ? "kms-menu-item active" : "kms-menu-item"
-            }
+            className={`kms-menu-item ${isUsers ? "active" : ""}`}
           >
             <Users size={18} />
             <span>Kelola User</span>
@@ -58,7 +86,6 @@ export default function Sidebar() {
         )}
       </nav>
 
-      {/* LOGOUT */}
       <div className="kms-sidebar-footer">
         <button className="kms-logout" onClick={handleLogout}>
           <LogOut size={18} />

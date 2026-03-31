@@ -1,15 +1,18 @@
 import Sidebar from "../components/Sidebar";
 import DashboardHeader from "../components/DashboardHeader";
-import { useKnowledge } from "../knowledge/KnowledgeContext";
+import { useKnowledge } from "../context/KnowledgeContext";
 import { Outlet, useLocation } from "react-router-dom";
 
 import "../styles/dashboard.css";
 
 export default function Dashboard() {
   const { knowledgeList } = useKnowledge();
+
   const location = useLocation();
 
-  const published = knowledgeList.filter((k) => k.status === "Published");
+  const published = (knowledgeList || []).filter(
+    (k) => k.status === "Published"
+  );
 
   const countByCategory = (category) =>
     published.filter((k) => k.category === category).length;
@@ -27,22 +30,18 @@ export default function Dashboard() {
           {isDashboardHome && (
             <div className="dashboard-stats-grid">
               <div className="dashboard-stat-card">
-                <div className="stat-number">
-                  {countByCategory("Media Releases")}
-                </div>
-                <div className="stat-label">Media Releases</div>
+                <div className="stat-number">{countByCategory("Sistem 1")}</div>
+                <div className="stat-label">Sistem 1</div>
               </div>
 
               <div className="dashboard-stat-card">
-                <div className="stat-number">
-                  {countByCategory("Lesson Learned")}
-                </div>
-                <div className="stat-label">Article</div>
+                <div className="stat-number">{countByCategory("Sistem 2")}</div>
+                <div className="stat-label">Sistem 2</div>
               </div>
 
               <div className="dashboard-stat-card">
-                <div className="stat-number">{countByCategory("Teknis")}</div>
-                <div className="stat-label">Announcement</div>
+                <div className="stat-number">{countByCategory("Sistem 3")}</div>
+                <div className="stat-label">Sistem 3</div>
               </div>
             </div>
           )}

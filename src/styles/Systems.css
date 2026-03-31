@@ -1,0 +1,145 @@
+.systems-page {
+  padding: 30px;
+}
+
+.systems-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.add-system-btn {
+  background: #2f5b8c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.systems-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.systems-table th,
+.systems-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.system-form {
+  background: #f5f7fb;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.system-form input,
+.system-form textarea,
+.system-form select {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn {
+  background: #ffc107;
+  border: none;
+  padding: 6px 10px;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+}
+.system-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.system-form input,
+.system-form textarea,
+.system-form select {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.systems-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.systems-table th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #eee;
+}
+
+.systems-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+.systems-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-system-btn {
+  background: #2d5ea8;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.system-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.system-form input,
+.system-form textarea,
+.system-form select {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.systems-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.systems-table th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #eee;
+}
+
+.systems-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}

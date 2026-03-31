@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "../styles/public.css";
 import { useNavigate } from "react-router-dom";
-import { useKnowledge } from "../knowledge/KnowledgeContext";
+import { useKnowledge } from "../context/KnowledgeContext";
 import { FaLink } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-
-import heroNews from "../assets/consulting.jpg"; // fallback hero jika thumbnail kosong
+import heroNews from "../assets/consulting.jpg"; 
 
 export default function LatestUpdates() {
   const navigate = useNavigate();

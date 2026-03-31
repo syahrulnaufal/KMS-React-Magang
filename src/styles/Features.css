@@ -1,0 +1,47 @@
+.features-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.add-feature-btn {
+  background: #2d5ea8;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.feature-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.feature-form input,
+.feature-form select {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.features-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.features-table th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #eee;
+}
+
+.features-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}

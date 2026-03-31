@@ -1,154 +1,134 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { useKnowledge } from "../knowledge/KnowledgeContext";
-import { Pencil, Trash2 } from "lucide-react";
+import { useSystems } from "../context/SystemContext";
+import { useFeatures } from "../context/FeatureContext";
+import { useKnowledge } from "../context/KnowledgeContext";
+import { useNavigate } from "react-router-dom";
+
+import "../styles/dashboard.css";
+import "../styles/editor.css";
 import "../styles/knowledge.css";
 
 export default function Knowledge() {
-  const { knowledgeList, deleteKnowledge } = useKnowledge();
+  const { systems } = useSystems();
+  const { features } = useFeatures();
+  const { knowledge, addKnowledge, deleteKnowledge } = useKnowledge();
+  const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("all");
+  const [showForm, setShowForm] = useState(false);
 
-  const filtered = knowledgeList.filter((item) => {
-    const matchSearch = item.title
-      ?.toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchCategory =
-      category === "all" ? true : item.category === category;
-
-    return matchSearch && matchCategory;
+  const [formData, setFormData] = useState({
+    title: "",
+    systemId: "",
+    featureId: "",
+    content: "",
+    video: "",
+    status: "Publish",
   });
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "-";
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("id-ID", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
   };
 
+  const handleSubmit = () => {
+    if (!formData.title) return;
+
+    addKnowledge(formData);
+
+    setFormData({
+      title: "",
+      systemId: "",
+      featureId: "",
+      content: "",
+      video: "",
+      status: "Publish",
+    });
+
+    setShowForm(false);
+  };
+
+  const getSystemName = (id) => {
+    const sys = systems.find((s) => s.id == id);
+    return sys ? sys.name : "-";
+  };
+
+  const getFeatureName = (id) => {
+    const f = features.find((f) => f.id == id);
+    return f ? f.name : "-";
+  };
+
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-container">
       <Sidebar />
-
       <div className="dashboard-main">
-        <main className="dashboard-content">
-          {/* ================= HEADER ================= */}
-          <div className="knowledge-header">
-            <div className="knowledge-header-left">
-              <h1 className="knowledge-title">Postingan</h1>
-            </div>
-
-            <div className="knowledge-header-right">
-              <select
-                className="knowledge-select"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="all">Semua ({filtered.length})</option>
-                <option value="Media Releases">Media Releases</option>
-                <option value="Article">Article</option>
-                <option value="Announcement">Announcement</option>
-              </select>
-
-              <input
-                className="knowledge-search"
-                type="text"
-                placeholder="Telusuri..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-
-              <Link to="/knowledge/add" className="knowledge-btn-add">
-                + Posting Baru
-              </Link>
-            </div>
+        <div className="content-page">
+          <div className="content-header">
+            <h2>Postingan</h2>
+            <button
+              className="add-btn"
+              onClick={() => navigate("/knowledge/add")}
+            >
+              + Add Content
+            </button>
           </div>
 
-          {/* ================= LIST ================= */}
-          <div className="knowledge-blog-list">
-            {filtered.length === 0 ? (
-              <div className="knowledge-empty">
-                <h3>Belum ada postingan</h3>
-                <p>
-                  Silakan tambah postingan baru untuk mulai mengisi knowledge.
-                </p>
+          {/* LIST CONTENT */}
 
-                <Link to="/knowledge/add" className="knowledge-btn-add">
-                  + Tambah Postingan
-                </Link>
-              </div>
-            ) : (
-              filtered.map((item) => {
-                const isPublished =
-                  item.status?.toLowerCase() === "published" ||
-                  item.status?.toLowerCase() === "dipublikasikan";
+          <div className="knowledge-list">
+            {knowledge.map((item) => (
+              <div key={item.id} className="knowledge-card">
+                <div className="knowledge-left">
+                  <div className="knowledge-thumb">{item.title?.charAt(0)}</div>
 
-                const statusText = isPublished ? "Published" : "Draf";
+                  <div className="knowledge-info">
+                    <h4>{item.title}</h4>
 
-                const dateText = formatDate(item.createdAt);
+                    <div className="knowledge-meta-row">
+                      <span className="meta-system">
+                        {getSystemName(item.systemId)}
+                      </span>
 
-                return (
-                  <div key={item.id} className="knowledge-blog-item">
-                    <div className="knowledge-blog-thumb">
-                      {item.thumbnail ? (
-                        <img src={item.thumbnail} alt="thumbnail" />
-                      ) : (
-                        <div className="knowledge-thumb-placeholder">
-                          {item.title?.charAt(0).toUpperCase()}
-                        </div>
-                      )}
-                    </div>
+                      <span className="meta-dot">•</span>
 
-                    <div className="knowledge-blog-content">
-                      <h3 className="knowledge-blog-title">
-                        {item.title || "(Tanpa judul)"}
-                      </h3>
+                      <span className="meta-feature">
+                        {getFeatureName(item.featureId)}
+                      </span>
 
-                      <p className="knowledge-blog-meta">
-                        <span
-                          className={`status-text ${
-                            isPublished ? "published" : "draft"
-                          }`}
-                        >
-                          {statusText}
-                        </span>
-
-                        <span className="dot">•</span>
-
-                        <span className="date-text">{dateText}</span>
-                      </p>
-                    </div>
-
-                    <div className="knowledge-blog-actions">
-                      <Link
-                        to={`/knowledge/edit/${item.id}`}
-                        className="icon-btn edit"
-                        title="Edit"
+                      <span
+                        className={
+                          item.status === "Publish"
+                            ? "status-publish"
+                            : "status-draft"
+                        }
                       >
-                        <Pencil size={18} />
-                      </Link>
-
-                      <button
-                        className="icon-btn delete"
-                        title="Hapus"
-                        onClick={() => deleteKnowledge(item.id)}
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                        {item.status}
+                      </span>
                     </div>
                   </div>
-                );
-              })
-            )}
+                </div>
+
+                <div className="knowledge-actions">
+                  <button
+                    className="btn-edit"
+                    onClick={() => navigate("/knowledge/edit/" + item.id)}
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteKnowledge(item.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );

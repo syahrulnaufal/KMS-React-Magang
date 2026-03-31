@@ -1,0 +1,51 @@
+.system-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 16px;
+  color: #111827;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-search {
+  width: 350px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+}
+
+.header-search:focus {
+  border-color: #38bdf8;
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+}
+
+.header-link {
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.header-link:hover {
+  color: #0284c7;
+}

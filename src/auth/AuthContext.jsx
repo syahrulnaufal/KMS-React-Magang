@@ -5,7 +5,6 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // load user dari localStorage saat refresh
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
@@ -14,25 +13,21 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (username, password) => {
-    // SUPERADMIN
     if (username === "superadmin" && password === "123") {
       const loggedUser = {
         username: "superadmin",
         role: "superadmin",
       };
-
       setUser(loggedUser);
       localStorage.setItem("user", JSON.stringify(loggedUser));
       return true;
     }
 
-    // ADMIN
     if (username === "admin" && password === "123") {
       const loggedUser = {
         username: "admin",
         role: "admin",
       };
-
       setUser(loggedUser);
       localStorage.setItem("user", JSON.stringify(loggedUser));
       return true;

@@ -16,23 +16,6 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
 }
 
-.back-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 10px;
-  border: none;
-  background: #eaf4f4;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #0f766e;
-  transition: 0.2s;
-}
-
-.back-btn:hover {
-  background: #d8eeee;
-}
-
 .btn-primary {
   padding: 12px 18px;
   border-radius: 10px;
@@ -849,171 +832,91 @@
   background: #ffedd5;
   transform: translateY(-2px);
 }
-{/* SIDEBAR */}
-<div className="editor-sidebar">
-  <div className="editor-sidebar-wrap">
 
-    {/* CARD AKSI */}
-    <div className="sidebar-card">
-      <h4 className="sidebar-card-title">Aksi</h4>
+.ql-toolbar {
+  border-radius: 12px;
+}
 
-      <div className="sidebar-action-row">
-        {/* PREVIEW */}
-        <button
-          className="sidebar-btn sidebar-btn-preview"
-          type="button"
-          onClick={() => setIsPreview(!isPreview)}
-        >
-          <Eye size={18} />
-        </button>
+.ql-container {
+  min-height: 300px;
+}
+.ql-font-poppins {
+  font-family: "Poppins", sans-serif;
+}
 
-        {/* DRAFT */}
-        <button
-          className="sidebar-btn sidebar-btn-draft"
-          type="button"
-          onClick={() => {
-            if (!title.trim()) {
-              alert("Judul wajib diisi");
-              return;
-            }
+.ql-font-roboto {
+  font-family: "Roboto", sans-serif;
+}
 
-            addKnowledge({
-              title,
-              content,
-              category,
-              status: "draft",
-              thumbnail: thumbnail || null,
-              createdAt: new Date().toISOString(),
-            });
+.ql-font-inter {
+  font-family: "Inter", sans-serif;
+}
 
-            navigate("/knowledge");
-          }}
-        >
-          Draft
-        </button>
+.ql-font-arial {
+  font-family: Arial;
+}
 
-        {/* PUBLISH */}
-        <button
-          className="sidebar-btn sidebar-btn-publish"
-          type="button"
-          onClick={handlePublish}
-        >
-          <Send size={16} />
-          Publish
-        </button>
-      </div>
-    </div>
+.ql-font-times-new-roman {
+  font-family: "Times New Roman";
+}
 
-    {/* CARD THUMBNAIL */}
-    <div className="sidebar-card">
-      <h4 className="sidebar-card-title">Thumbnail</h4>
+.ql-toolbar .ql-font {
+  min-width: 140px;
+}
 
-      <div className="thumbnail-area">
-        {thumbnail ? (
-          <img src={thumbnail} alt="Thumbnail" className="thumbnail-img" />
-        ) : (
-          <p className="thumbnail-empty">Belum ada thumbnail</p>
-        )}
-      </div>
+.ql-picker.ql-font .ql-picker-item {
+  white-space: nowrap;
+}
 
-      <label className="sidebar-upload-btn">
-        Upload Thumbnail
-        <input
-          type="file"
-          accept="image/*"
-          hidden
-          onChange={handleThumbnailUpload}
-        />
-      </label>
+.ql-picker.ql-font .ql-picker-label {
+  white-space: nowrap;
+}
+.ql-tooltip {
+  z-index: 1000;
+}
 
-      {thumbnail && (
-        <button
-          className="sidebar-delete-btn"
-          type="button"
-          onClick={() => setThumbnail(null)}
-        >
-          Hapus Thumbnail
-        </button>
-      )}
-    </div>
+.ql-picker-options {
+  max-height: 200px;
+  overflow-y: auto;
+}
 
-    {/* CARD SETELAN */}
-    <div className="sidebar-card">
-      <h4 className="sidebar-card-title">Setelan Posting</h4>
+.ql-editor {
+  min-height: 300px;
+}
+/* FIX QUILL PICKER POSITION */
+.ql-picker-options {
+  left: 0 !important;
+  top: 100% !important;
+}
 
-      <div className="sidebar-group">
-        <label>Kategori</label>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="Media Releases">Media Releases</option>
-          <option value="Article">Article</option>
-          <option value="Announcement">Announcement</option>
-        </select>
-      </div>
+/* FIX COLOR PANEL */
+.ql-color-picker .ql-picker-options,
+.ql-background .ql-picker-options {
+  display: grid;
+  grid-template-columns: repeat(7, 20px);
+  gap: 4px;
+  padding: 6px;
+  background: white;
+  border: 1px solid #ddd;
+}
 
-      <div className="sidebar-group">
-        <label>Dipublikasikan pada</label>
+/* PREVENT FLOATING PANEL */
+.ql-toolbar .ql-picker {
+  position: relative;
+}
 
-        {/* AUTO */}
-        <label
-          className={`publish-box ${publishMode === "auto" ? "active" : ""}`}
-        >
-          <div className="publish-head">
-            <span>Otomatis</span>
+/* HIDE BROKEN PANEL */
+.ql-picker-options {
+  z-index: 9999;
+}
+/* FIX quill hidden select */
+.ql-toolbar select {
+  display: none !important;
+}
 
-            <input
-              type="radio"
-              name="publishMode"
-              value="auto"
-              checked={publishMode === "auto"}
-              onChange={() => setPublishMode("auto")}
-              className="radio-hidden"
-            />
-
-            <span className="radio-custom"></span>
-          </div>
-        </label>
-
-        {/* SCHEDULE */}
-        <label
-          className={`publish-box ${
-            publishMode === "schedule" ? "active" : ""
-          }`}
-        >
-          <div className="publish-head">
-            <span>Setel tanggal dan waktu</span>
-
-            <input
-              type="radio"
-              name="publishMode"
-              value="schedule"
-              checked={publishMode === "schedule"}
-              onChange={() => setPublishMode("schedule")}
-              className="radio-hidden"
-            />
-
-            <span className="radio-custom"></span>
-          </div>
-
-          {publishMode === "schedule" && (
-            <div className="publish-body">
-              <div className="datetime-row">
-                <input
-                  type="date"
-                  value={publishDate}
-                  onChange={(e) => setPublishDate(e.target.value)}
-                  onClick={(e) => e.stopPropagation()}
-                />
-                <input
-                  type="time"
-                  value={publishTime}
-                  onChange={(e) => setPublishTime(e.target.value)}
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </div>
-            </div>
-          )}
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
+/* hide default browser select */
+.ql-toolbar select.ql-header,
+.ql-toolbar select.ql-font,
+.ql-toolbar select.ql-size {
+  display: none !important;
+}

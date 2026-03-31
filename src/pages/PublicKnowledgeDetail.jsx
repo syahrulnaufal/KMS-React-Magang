@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import { useKnowledge } from "../knowledge/KnowledgeContext";
+import { useKnowledge } from "../context/KnowledgeContext";
 import "../styles/publicKnowledgeDetail.css";
 import { FiLink, FiCalendar } from "react-icons/fi";
 

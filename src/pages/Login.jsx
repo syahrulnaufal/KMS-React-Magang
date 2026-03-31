@@ -8,24 +8,21 @@ import "../styles/login.css";
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPass, setShowPass] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const success = login(username, password);
-
     if (success) {
       navigate("/dashboard");
     } else {
-      setError("Username atau Password salah!");
+      setError("Email atau password salah");
     }
   };
-
   return (
     <div className="login-page">
       <div className="login-card">
@@ -44,10 +41,11 @@ export default function Login() {
               <div className="input-icon">
                 <Mail size={18} />
               </div>
+
               <input
                 type="text"
-                placeholder="Masukkan username"
                 value={username}
+                placeholder="Masukkan username"
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>

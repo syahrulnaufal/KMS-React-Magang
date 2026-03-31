@@ -1,29 +1,48 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useKnowledge } from "../knowledge/KnowledgeContext";
+import { useKnowledge } from "../context/KnowledgeContext";
 import KnowledgeEditor from "../components/KnowledgeEditor";
 import { ArrowLeft, Eye, Send, Save } from "lucide-react";
+import { useSystems } from "../context/SystemContext";
+import { useFeatures } from "../context/FeatureContext";
 import "../styles/editor.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-export default function AddKnowledge() {
+export default function AddKnowledge({ editId }) {
   const navigate = useNavigate();
-  const { addKnowledge } = useKnowledge();
+  const { addKnowledge, updateKnowledge, knowledge } = useKnowledge();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("SOP");
+  const { systems } = useSystems();
+  const { features } = useFeatures();
 
-  const [publishMode, setPublishMode] = useState("schedule");
-  const [publishDate, setPublishDate] = useState("2026-02-04");
-  const [publishTime, setPublishTime] = useState("12:49");
+  const [systemId, setSystemId] = useState("");
+  const [featureId, setFeatureId] = useState("");
+
+  const [publishMode, setPublishMode] = useState("auto");
+  const [publishDate, setPublishDate] = useState("");
+  const [publishTime, setPublishTime] = useState("");
 
   const [isPreview, setIsPreview] = useState(false);
 
-  // ===============================
-  // THUMBNAIL
-  // ===============================
   const [thumbnail, setThumbnail] = useState(null);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (editId) {
+      const data = knowledge.find((k) => k.id === Number(editId));
+
+      if (data) {
+        setTitle(data.title);
+        setContent(data.content);
+        setSystemId(data.systemId || "");
+        setFeatureId(data.featureId || "");
+        setThumbnail(data.thumbnail || null);
+      }
+    }
+  }, [editId, knowledge]);
 
   useEffect(() => {
     const savedThumb = localStorage.getItem("knowledge_thumbnail");
@@ -31,6 +50,8 @@ export default function AddKnowledge() {
       setThumbnail(savedThumb);
     }
   }, []);
+
+  const filteredFeatures = features.filter((f) => f.systemId === systemId);
 
   const handleThumbnailUpload = (e) => {
     const file = e.target.files[0];
@@ -43,7 +64,7 @@ export default function AddKnowledge() {
 
     const maxSize = 500 * 1024;
     if (file.size > maxSize) {
-      alert("Ukuran file terlalu besar! Maksimal 500KB.");
+      alert("Ukuran file maksimal 500KB");
       return;
     }
 
@@ -54,8 +75,7 @@ export default function AddKnowledge() {
         localStorage.setItem("knowledge_thumbnail", reader.result);
         setThumbnail(reader.result);
       } catch (err) {
-        alert("Gagal menyimpan thumbnail! Storage penuh.");
-        console.error(err);
+        alert("Storage penuh, gagal menyimpan thumbnail");
       }
     };
 
@@ -63,11 +83,17 @@ export default function AddKnowledge() {
     e.target.value = "";
   };
 
+  // ==========================
+  // REMOVE THUMBNAIL
+  // ==========================
   const handleRemoveThumbnail = () => {
     localStorage.removeItem("knowledge_thumbnail");
     setThumbnail(null);
   };
 
+  // ==========================
+  // SAVE DRAFT
+  // ==========================
   const handleDraft = () => {
     if (!title.trim()) {
       alert("Judul wajib diisi");
@@ -77,9 +103,10 @@ export default function AddKnowledge() {
     addKnowledge({
       title,
       content,
-      category,
+      systemId,
+      featureId,
       status: "draft",
-      thumbnail: thumbnail || null,
+      thumbnail,
       createdAt: new Date().toISOString(),
     });
 
@@ -87,22 +114,28 @@ export default function AddKnowledge() {
     navigate("/knowledge");
   };
 
+  // ==========================
+  // PUBLISH
+  // ==========================
   const handlePublish = () => {
     if (!title.trim()) {
       alert("Judul wajib diisi");
       return;
     }
 
+    const publishDateTime =
+      publishMode === "schedule"
+        ? new Date(`${publishDate}T${publishTime}`).toISOString()
+        : new Date().toISOString();
+
     addKnowledge({
       title,
       content,
-      category,
+      systemId,
+      featureId,
       status: "published",
-      thumbnail: thumbnail || null,
-      createdAt:
-        publishMode === "schedule"
-          ? new Date(`${publishDate}T${publishTime}`).toISOString()
-          : new Date().toISOString(),
+      thumbnail,
+      createdAt: publishDateTime,
     });
 
     localStorage.removeItem("knowledge_thumbnail");
@@ -113,16 +146,19 @@ export default function AddKnowledge() {
     <div className="editor-page-full">
       {/* HEADER */}
       <div className="editor-header-simple">
-        <button className="btn-back-modern" onClick={() => navigate(-1)}>
+        <button
+          className="btn-back-modern"
+          onClick={() => navigate("/knowledge")}
+        >
           <ArrowLeft size={18} />
         </button>
       </div>
 
       {/* BODY */}
       <div className="editor-layout-full">
-        {/* MAIN */}
+        {/* MAIN EDITOR */}
         <div className="editor-main-full">
-          {/* CARD NAVBAR (JUDUL + TOOLBAR) */}
+          {/* TOP CARD */}
           <div className="editor-top-card">
             <input
               className="editor-title-navbar"
@@ -132,24 +168,32 @@ export default function AddKnowledge() {
             />
 
             <div id="quill-toolbar" className="toolbar-holder">
+              {/* FONT & SIZE */}
               <span className="ql-formats">
-                <select className="ql-font" defaultValue="sans-serif">
+                <select className="ql-font">
                   <option value="sans-serif">Sans Serif</option>
                   <option value="serif">Serif</option>
                   <option value="monospace">Monospace</option>
                   <option value="poppins">Poppins</option>
                   <option value="roboto">Roboto</option>
+                  <option value="inter">Inter</option>
                   <option value="arial">Arial</option>
                   <option value="times-new-roman">Times New Roman</option>
-                  <option value="courier-new">Courier New</option>
-                  <option value="georgia">Georgia</option>
-                  <option value="tahoma">Tahoma</option>
-                  <option value="verdana">Verdana</option>
                 </select>
-
                 <select className="ql-size"></select>
               </span>
 
+              {/* HEADING */}
+              <span className="ql-formats">
+                <select className="ql-header">
+                  <option value="1"></option>
+                  <option value="2"></option>
+                  <option value="3"></option>
+                  <option value=""></option>
+                </select>
+              </span>
+
+              {/* TEXT STYLE */}
               <span className="ql-formats">
                 <button className="ql-bold"></button>
                 <button className="ql-italic"></button>
@@ -157,33 +201,44 @@ export default function AddKnowledge() {
                 <button className="ql-strike"></button>
               </span>
 
+              {/* LIST */}
               <span className="ql-formats">
                 <button className="ql-list" value="ordered"></button>
                 <button className="ql-list" value="bullet"></button>
+              </span>
+
+              {/* INDENT */}
+              <span className="ql-formats">
                 <button className="ql-indent" value="-1"></button>
                 <button className="ql-indent" value="+1"></button>
               </span>
 
+              {/* ALIGN */}
               <span className="ql-formats">
-                <button className="ql-align" value=""></button>
-                <button className="ql-align" value="center"></button>
-                <button className="ql-align" value="right"></button>
-                <button className="ql-align" value="justify"></button>
+                <select className="ql-align"></select>
               </span>
 
+              {/* MEDIA */}
               <span className="ql-formats">
                 <button className="ql-link"></button>
                 <button className="ql-image"></button>
                 <button className="ql-video"></button>
               </span>
 
+              {/* BLOCK */}
+              <span className="ql-formats">
+                <button className="ql-blockquote"></button>
+                <button className="ql-code-block"></button>
+              </span>
+
+              {/* CLEAR */}
               <span className="ql-formats">
                 <button className="ql-clean"></button>
               </span>
             </div>
           </div>
 
-          {/* CARD WORD PAPER */}
+          {/* PAPER */}
           <div className="editor-paper-card">
             {isPreview ? (
               <div className="preview-box">
@@ -194,7 +249,7 @@ export default function AddKnowledge() {
                 <div
                   className="preview-content"
                   dangerouslySetInnerHTML={{
-                    __html: content || "<p>Belum ada isi knowledge.</p>",
+                    __html: content || "<p>Belum ada isi knowledge</p>",
                   }}
                 />
               </div>
@@ -206,37 +261,31 @@ export default function AddKnowledge() {
 
         {/* SIDEBAR */}
         <div className="editor-sidebar">
-          {/* ACTION CARD */}
+          {/* ACTION */}
           <div className="action-card">
             <h4 className="action-title">Aksi</h4>
 
             <div className="action-buttons">
               <button
                 className="btn-eye"
-                type="button"
-                title="Preview"
                 onClick={() => setIsPreview(!isPreview)}
               >
                 <Eye size={18} />
               </button>
 
-              <button className="btn-draft" type="button" onClick={handleDraft}>
+              <button className="btn-draft" onClick={handleDraft}>
                 <Save size={16} />
                 Draft
               </button>
 
-              <button
-                className="btn-publish"
-                type="button"
-                onClick={handlePublish}
-              >
+              <button className="btn-publish" onClick={handlePublish}>
                 <Send size={16} />
                 Publish
               </button>
             </div>
           </div>
 
-          {/* THUMBNAIL MENU */}
+          {/* THUMBNAIL */}
           <div className="thumbnail-card">
             <h4 className="thumbnail-title">Thumbnail</h4>
 
@@ -249,7 +298,6 @@ export default function AddKnowledge() {
             </div>
 
             <button
-              type="button"
               className="thumbnail-upload-btn"
               onClick={() => fileInputRef.current.click()}
             >
@@ -267,7 +315,6 @@ export default function AddKnowledge() {
             {thumbnail && (
               <button
                 className="thumbnail-remove-btn"
-                type="button"
                 onClick={handleRemoveThumbnail}
               >
                 Hapus Thumbnail
@@ -275,25 +322,50 @@ export default function AddKnowledge() {
             )}
           </div>
 
-          {/* SETTINGS */}
-          <h4 className="sidebar-title">Setelan Posting</h4>
-
+          {/* SYSTEM */}
           <div className="sidebar-group">
-            <label>Kategori</label>
+            <label>System</label>
+
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={systemId}
+              onChange={(e) => {
+                setSystemId(e.target.value);
+                setFeatureId("");
+              }}
             >
-              <option value="Media Releases">Media Releases</option>
-              <option value="Article">Article</option>
-              <option value="Announcement">Announcement</option>
+              <option value="">Pilih System</option>
+
+              {systems.map((sys) => (
+                <option key={sys.id} value={sys.id}>
+                  {sys.name}
+                </option>
+              ))}
             </select>
           </div>
 
+          {/* FEATURE */}
+          <div className="sidebar-group">
+            <label>Feature</label>
+
+            <select
+              value={featureId}
+              onChange={(e) => setFeatureId(e.target.value)}
+              disabled={!systemId}
+            >
+              <option value="">Pilih Feature</option>
+
+              {filteredFeatures.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* PUBLISH SETTING */}
           <div className="sidebar-group">
             <label>Dipublikasikan pada</label>
 
-            {/* AUTO */}
             <label
               className={`publish-box ${
                 publishMode === "auto" ? "active" : ""
@@ -308,14 +380,10 @@ export default function AddKnowledge() {
                   value="auto"
                   checked={publishMode === "auto"}
                   onChange={() => setPublishMode("auto")}
-                  className="radio-hidden"
                 />
-
-                <span className="radio-custom"></span>
               </div>
             </label>
 
-            {/* SCHEDULE */}
             <label
               className={`publish-box ${
                 publishMode === "schedule" ? "active" : ""
@@ -330,10 +398,7 @@ export default function AddKnowledge() {
                   value="schedule"
                   checked={publishMode === "schedule"}
                   onChange={() => setPublishMode("schedule")}
-                  className="radio-hidden"
                 />
-
-                <span className="radio-custom"></span>
               </div>
 
               {publishMode === "schedule" && (
@@ -343,13 +408,12 @@ export default function AddKnowledge() {
                       type="date"
                       value={publishDate}
                       onChange={(e) => setPublishDate(e.target.value)}
-                      onClick={(e) => e.stopPropagation()}
                     />
+
                     <input
                       type="time"
                       value={publishTime}
                       onChange={(e) => setPublishTime(e.target.value)}
-                      onClick={(e) => e.stopPropagation()}
                     />
                   </div>
                 </div>

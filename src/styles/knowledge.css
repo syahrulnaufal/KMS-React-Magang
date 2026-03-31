@@ -251,3 +251,318 @@ a.knowledge-btn-add:hover {
   background: #0f2854 !important;
   color: #ffffff !important;
 }
+/* SYSTEM FILTER */
+.knowledge-system-select {
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: none;
+  background: #eaf2ff;
+  color: #1c4d8d;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.knowledge-system-select:hover {
+  background: #d6e6ff;
+}
+/* =============================
+   KNOWLEDGE PAGE
+============================= */
+
+.knowledge-page {
+  padding: 30px;
+}
+
+/* HEADER */
+
+.knowledge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.knowledge-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.btn-add-content {
+  background: #0f766e;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* TABLE */
+
+.knowledge-table-wrapper {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.knowledge-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.knowledge-table th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #eee;
+  font-weight: 600;
+}
+
+.knowledge-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* STATUS */
+
+.status {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.published {
+  background: #e6f7ec;
+  color: #2e8b57;
+}
+
+.status.draft {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* BUTTON */
+
+.btn-edit {
+  background: #ffc107;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* =============================
+   CONTENT PAGE
+============================= */
+
+.content-page {
+  padding: 30px;
+}
+
+/* HEADER */
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.content-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ADD BUTTON */
+
+.add-content-btn {
+  background: #0f766e;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-content-btn:hover {
+  background: #0b5f59;
+}
+
+/* TABLE */
+
+.content-table {
+  width: 100%;
+  background: white;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.content-table th {
+  text-align: left;
+  padding: 12px;
+  background: #f7f7f7;
+  border-bottom: 2px solid #eee;
+}
+
+.content-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* BUTTON */
+
+.edit-btn {
+  background: #ffc107;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background: #bb2d3b;
+}
+
+/* FORM */
+
+.content-form {
+  margin-top: 25px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+}
+
+.content-form input,
+.content-form select,
+.content-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.content-form button {
+  background: #1f4fa3;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.knowledge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.knowledge-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.knowledge-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.knowledge-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.knowledge-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.knowledge-meta {
+  font-size: 13px;
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+.knowledge-status {
+  margin-top: 6px;
+}
+
+.status-publish {
+  background: #dcfce7;
+  color: #166534;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-draft {
+  background: #e5e7eb;
+  color: #374151;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.knowledge-actions {
+  display: flex;
+  gap: 10px;
+}
+.knowledge-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.meta-system {
+  font-weight: 600;
+  color: #374151;
+}
+
+.meta-feature {
+  color: #2563eb;
+}
+
+.meta-dot {
+  color: #9ca3af;
+}
