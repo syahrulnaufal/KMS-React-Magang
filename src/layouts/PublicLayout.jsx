@@ -1,5 +1,6 @@
 import { Outlet, NavLink } from "react-router-dom";
 import "../styles/public.css";
+import "../styles/modern-beautify.css";
 import logoImg from "../assets/logo-rbs.png";
 
 const menus = [];

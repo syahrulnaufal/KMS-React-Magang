@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/public.css";
+import "../styles/modern-beautify.css";
 
 import {
   FaFacebookF,

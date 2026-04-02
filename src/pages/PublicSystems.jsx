@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
 import { FiSearch } from "react-icons/fi";
@@ -9,8 +10,13 @@ import "../styles/public.css";
 export default function PublicSystems() {
   const { systems } = useSystems();
   const { features } = useFeatures();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
+
+  const filteredSystems = systems.filter((sys) =>
+    sys.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
@@ -27,7 +33,12 @@ export default function PublicSystems() {
           <div className="systems-search">
             <div className="systems-search-input">
               <FiSearch className="search-icon" />
-              <input type="text" placeholder="Cari sistem atau pengguna..." />
+              <input 
+                type="text" 
+                placeholder="Cari sistem atau pengguna..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
 
             <button className="systems-search-btn">
@@ -39,7 +50,7 @@ export default function PublicSystems() {
       </section>
 
       <div className="systems-grid">
-        {systems.map((sys) => {
+        {filteredSystems.map((sys) => {
           const systemFeatures = features.filter(
             (f) => Number(f.systemId) === Number(sys.id)
           );

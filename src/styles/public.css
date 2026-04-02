@@ -265,7 +265,7 @@ body[data-theme="dark"] {
 
 /* Gradient overlay — putih dominan di kiri, transparan di kanan */
 .hero-gradient {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, ...);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%);
 }
 
 /* Fade bawah */
@@ -2903,6 +2903,7 @@ body {
 .cta-title span {
   background: linear-gradient(90deg, #2d5bff, #4f7cff) !important;
   -webkit-background-clip: text !important;
+  background-clip: text;
   -webkit-text-fill-color: transparent !important;
 }
 .cta-title span {
@@ -2923,6 +2924,7 @@ body {
 .rbs-cta-modern .rbs-cta-modern-content h1 span {
   background: linear-gradient(90deg, #2d5bff, #4f7cff) !important;
   -webkit-background-clip: text !important;
+  background-clip: text;
   -webkit-text-fill-color: transparent !important;
   color: transparent !important;
 }
@@ -3973,6 +3975,7 @@ body[data-theme="dark"] .public-about-desc {
 body[data-theme="dark"] .public-about-title {
   background: none !important;
   -webkit-background-clip: initial !important;
+  background-clip: text;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
 }
@@ -4354,9 +4357,9 @@ body {
   }
 }
 
-.public-about-title {
+/* .public-about-title {
   font-size: ;
-}
+} */
 /* HERO KMS */
 
 .kms-hero {
@@ -4437,12 +4440,12 @@ body {
   color: #2563eb;
 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  transition: 0.3s;
+  /* transition: 0.3s; */
 }
 
-.kms-system-card:hover {
+/* .kms-system-card:hover {
   transform: translateY(-5px);
-}
+} */
 
 .kms-system-card span {
   font-size: 14px;
@@ -4885,6 +4888,8 @@ body {
 .systems-grid {
   max-width: 1400px;
   margin: 60px auto;
+  padding: 0 20px;
+  padding-bottom: 60px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 36px;
@@ -4894,9 +4899,10 @@ body {
   background: #ffffff;
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.25s ease;
+  max-width: 45vw;
 }
 
 .system-card:hover {
