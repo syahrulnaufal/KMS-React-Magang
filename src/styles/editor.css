@@ -68,7 +68,7 @@
 }
 
 .ql-container {
-  border-radius: 0 0 12px 12px;
+  /* border-radius: 0 0 12px 12px; */
   border: 1px solid #e5e7eb !important;
   min-height: 340px;
   font-size: 15px;
@@ -710,11 +710,11 @@
   cursor: pointer;
   transition: 0.2s;
   font-size: 13px;
+  opacity: 0.8;
 }
 
 .thumbnail-upload-btn:hover {
-  opacity: 0.95;
-  transform: translateY(-2px);
+  opacity: 1;
 }
 
 .thumbnail-remove-btn {

@@ -17,10 +17,11 @@ export function KnowledgeProvider({ children }) {
     const newData = {
       id: Date.now(),
       title: data.title,
-      system: data.system,
-      feature: data.feature,
+      systemId: data.systemId || data.system,
+      featureId: data.featureId || data.feature,
       content: data.content,
-      status: data.status || "Publish",
+      status: (data.status === "published" || data.status === "Publish") ? "Publish" : "Draft",
+      thumbnail: data.thumbnail,
     };
 
     setKnowledge((prev) => [...prev, newData]);
@@ -28,6 +29,7 @@ export function KnowledgeProvider({ children }) {
 
   // DELETE CONTENT
   const deleteKnowledge = (id) => {
+    if(!confirm('yakin ingin menghapus content ini ?\n(content ini akan dihapus permanen)')) return;
     setKnowledge((prev) => prev.filter((k) => k.id !== id));
   };
 

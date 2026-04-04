@@ -360,6 +360,10 @@ a.knowledge-btn-add:hover {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.add-btn{
+  padding: 0.2rem 0.5rem;
+}
 /* =============================
    CONTENT PAGE
 ============================= */

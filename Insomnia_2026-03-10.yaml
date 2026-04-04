@@ -1,0 +1,611 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: KMS BECKEND
+meta:
+  id: wrk_22e5fd1870c048afae6606b153c52d50
+  created: 1770181816655
+  modified: 1772435188792
+  description: ""
+collection:
+  - url: https://kms-laravel-magang-production.up.railway.app/api/login
+    name: POST api login admin
+    meta:
+      id: req_15b2470e0eef4d3c94cb4a4f857e2dad
+      created: 1770181850496
+      modified: 1773063361916
+      isPrivate: false
+      description: ""
+      sortKey: -1770181850496
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "admin@readymix.com",
+        	"password": "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.2.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/admin/contents/3/approve
+    name: Patch api admin content approve
+    meta:
+      id: req_4737a5dbe5524b908d9dbb5677a014b6
+      created: 1770185381511
+      modified: 1773063343024
+      isPrivate: false
+      description: ""
+      sortKey: -1770185381511
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "admin@readymix.com",
+        	"password": "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 125|oeq9Zq8BuFdEaYwMj8QaQ6ZlgEKZXY28VKNCRS856e9e765c
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/admin/contents
+    name: GET api admin contents
+    meta:
+      id: req_a9a8f873429942689d1b003f533dc8a3
+      created: 1770186130429
+      modified: 1773063318317
+      isPrivate: false
+      description: ""
+      sortKey: -1770186130429
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email" : "admin@readymix.com",
+        	"password" : "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 125|oeq9Zq8BuFdEaYwMj8QaQ6ZlgEKZXY28VKNCRS856e9e765c
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/login
+    name: POST api login superadmin
+    meta:
+      id: req_90c7265d841d4bb5afefced06a5f6c5f
+      created: 1770186489518
+      modified: 1773063294427
+      isPrivate: false
+      description: ""
+      sortKey: -1770186489518
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email" : "super@readymix.com",
+        	"password" : "password"
+        	
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 60|rpFjAC8I2E5kBeJmQfvbAWVttIr4ZMUXv3Vpqd1p7e04f1be
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/admin/contents/1/reject
+    name: Pitch api admin content reject
+    meta:
+      id: req_ac8d853a6eb84ba8aa4ce6ee6d90e084
+      created: 1770188682232
+      modified: 1773063279618
+      isPrivate: false
+      description: ""
+      sortKey: -1770188682232
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"note_project": "Konten kurang lengkap, tolong revisi bagian langkah-langkah."
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 1|2Gq5nrIlSAo7mGHtKCAgpTjlBw0ibalnxmB9gTlZ6801e5e0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/login
+    name: POST api login superadmin
+    meta:
+      id: req_07b3010358b847848c01359b7129ebdc
+      created: 1770700952161
+      modified: 1773063262018
+      isPrivate: false
+      description: ""
+      sortKey: -1770700952161
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "super@readymix.com",
+        	"password": "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/jsonpair_029401dac5254450b331f6ca86c174e5
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+      - name: Accept
+        value: application/json
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://192.168.0.100:8000/api/me
+    name: GET api me
+    meta:
+      id: req_25fae401d9c1419f854a0a98a6acbd90
+      created: 1770707276738
+      modified: 1772559072687
+      isPrivate: false
+      description: ""
+      sortKey: -1770707276739
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 7|ZPw6u5TRKPFnbLpmfV8ZN6nt4jKUvB4hq6EwRn04b5c59138
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/login
+    name: POST api login public
+    meta:
+      id: req_d639bde5618844cead49ea5036e7a0f2
+      created: 1770709822004
+      modified: 1773063242815
+      isPrivate: false
+      description: ""
+      sortKey: -1770709822004
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email" : "public@readymix.com",
+        	"password" : "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/super/apps
+    name: New Request
+    meta:
+      id: req_974105d28cce48baacc1c87671d540b1
+      created: 1770709903097
+      modified: 1773063225050
+      isPrivate: false
+      description: ""
+      sortKey: -1770709903097
+    method: POST
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 126|5tSETpXsvgPMwzWn5Pd0XpTSWzRTYKTOG6gJe464ed06931f
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/me
+    name: GET api me public
+    meta:
+      id: req_996cb393edbe45679d3053b61732cfed
+      created: 1770711836669
+      modified: 1773063166052
+      isPrivate: false
+      description: ""
+      sortKey: -1770711836669
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 122|IosYfdLTmAYpiEA4xUHOY1nITDn5aZsoa3Vkqq4c124c8f39
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/public/contents
+    name: POST public content
+    meta:
+      id: req_bb924db1e1ed4a4197a365f048da1523
+      created: 1770711961925
+      modified: 1773128399169
+      isPrivate: false
+      description: ""
+      sortKey: -1770711961925
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: thumbnail
+          value: ""
+          description: ""
+          disabled: false
+          fileName: C:\Users\Apriyanto\Downloads\image (1).png
+          type: file
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 136|MBPattT2rbPeMNQqnt0rgu1AI9LbrnzhdCTjThqh3b6cf262
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-laravel-magang-production.up.railway.app/api/contents
+    name: GET api admin contents
+    meta:
+      id: req_dc4a7216255b422f95d9839e0a8ede59
+      created: 1771909753834
+      modified: 1773128586632
+      isPrivate: false
+      description: ""
+      sortKey: -1771909753834
+    method: GET
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: thumbnail
+          value: ""
+          description: ""
+          disabled: true
+          fileName: C:\Users\Apriyanto\Downloads\image (2).png
+          type: file
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+      - name: accept
+        value: application/json
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 123|igfGVNxSZkpU9KwvnSTdzSunA6l0WR9FZ1Z2pVNE7ef1d735
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://kms-magang.infinityfreeapp.com/api/contents
+    name: New Request
+    meta:
+      id: req_f2b2d50d07044526bfece5907584ac31
+      created: 1773046258152
+      modified: 1773055881554
+      isPrivate: false
+      description: ""
+      sortKey: -1773046258152
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "admin@readymix.com",
+          "password": "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+      - name: Accept
+        value: application/json
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/public/contents
+    name: localost public content
+    meta:
+      id: req_1dcc97fd649248828bb7f2a63d44aa8b
+      created: 1773128564901
+      modified: 1773129697917
+      isPrivate: false
+      description: ""
+      sortKey: -1773128564901
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: thumbnail
+          value: ""
+          description: ""
+          disabled: false
+          fileName: C:\Users\Apriyanto\Downloads\image (1).png
+          type: file
+        - name: app_id
+          value: "1"
+          description: ""
+          disabled: false
+          multiline: false
+          type: text
+        - name: feature_id
+          value: "1"
+          description: ""
+          disabled: false
+          multiline: false
+          type: text
+        - name: title
+          value: Judul Teknis Disk Storage
+          description: ""
+          disabled: false
+        - name: category
+          value: Teknis
+          description: ""
+          disabled: false
+        - name: body
+          value: Isi kontent teting upload gambar asli ke folder storage
+          description: ""
+          disabled: false
+          multiline: true
+          type: text
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+      - name: Accept
+        value: application/json
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: 1|xx8ujiIIur7lDEbPU08WzQAHj5T6ZiuN92ADdRwL7d56e8ea
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/login
+    name: Localost api login public
+    meta:
+      id: req_e9404c329401449ab18e5eeacfa14362
+      created: 1773128962310
+      modified: 1773129101190
+      isPrivate: false
+      description: ""
+      sortKey: -1773128962311
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "public@readymix.com",
+          "password": "password"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_225e0076d3c74ec276c808720c25afe8c0c19108
+    created: 1770181816685
+    modified: 1773063228606
+  cookies:
+    - id: 673e5196-e026-45ab-8de2-662726e94ddf
+      key: __test
+      value: af709e0e732ada482762bf03283e9cb0
+      domain: kms-magang.infinityfreeapp.com
+      path: /
+      secure: false
+      httpOnly: false
+    - id: e5733b37-a9a7-472a-b656-a36af8745045
+      key: XSRF-TOKEN
+      value: eyJpdiI6ImVnNXlCUDM2TFBNSUNVcmNNcjVIYXc9PSIsInZhbHVlIjoiek1nYVVvS3cwOFg0Nnpyc3NDUGtZSFZmZ21mai9XSm1SZE9RWGEwaVgzQUNDa3FkTXV5RWk3U3NGa0hDWC8vZWlQSS93SVNKR2FBTWIvaVZNMm5SQ09XRjluUTdnVnRnNzZSemhCZzU1aDE1V1lWUThzSDQ1WFFMVXowWlUrS2UiLCJtYWMiOiIxZTkyN2QwYThhZTJiYWJlOTUxNjJmOWY5OWRhOWUxYjJmMmRiNWZkZDI3OWViMGM2NTJmNjk3YWE0ZjQwNmUxIiwidGFnIjoiIn0%3D
+      domain: 127.0.0.1
+      path: /
+      secure: false
+      httpOnly: false
+      hostOnly: true
+    - id: 6dc64afc-22f1-4059-a009-2fe9f4d28772
+      key: laravel-session
+      value: eyJpdiI6ImtnMDk5dWlsc0YvdVJ3YVB1MUVWMlE9PSIsInZhbHVlIjoiSXU0RzVGenpoMHc0MHErRkN0Q2lmTG12VHFJTVRURDA2REVIRUZLTWowY2N3SFJrV3B3dG5XaVA0bkFpS1I1NXJBalB1YlUvMkk5M20wTlBpbmlSQlZEZ0pCRDBwU0g3TkY2S3Jhc1RPQWVPQjBJYUpHK2pwNEYzVGVrSjlhdmUiLCJtYWMiOiJlMDIxZThiNjAwYmRjMGNjMTNkZjBhYjVjODRkZmZiZmJhODVhZDQ5YzlhMjc5MDFkZTBkZmExMjMzN2MyYjZhIiwidGFnIjoiIn0%3D
+      domain: 127.0.0.1
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+    - id: 4145d60f-df29-4ded-a77c-151fbbf1a6c4
+      key: XSRF-TOKEN
+      value: eyJpdiI6IjU0eXhZVWlTeVdqeGpvbFV2Q0lyQ1E9PSIsInZhbHVlIjoiNE92ODBXZjl2WUFLVXlTR1hhbVJvamRrZVBHenFLanFOZ2c2MmxtcFpjeW93QS9VNUZoUjFYaVp5MDZSaXNDcUk4VXpKUW1sZXNXWlhiODFvV3NLdUlybzQxM2lUUHh2TjZGdENmRFhnbjFFV3YxTzNkVU5ud3FFaGNQOTRpL1QiLCJtYWMiOiIzMDM5ZTQ4NThhMjUwNDNhM2YzZWZmN2JmZWM0YmE5MDk5YjhhYTZiMDI5ZDc0M2ZjZWMyYjFlMzY4OGViNDhhIiwidGFnIjoiIn0%3D
+      domain: 192.168.0.100
+      path: /
+      secure: false
+      httpOnly: false
+      hostOnly: false
+    - id: 5fd1b824-2a52-409b-a034-324329b252b1
+      key: laravel-session
+      value: eyJpdiI6IkNqRXJSK1RYblJiVGRmcUNkK0NiNXc9PSIsInZhbHVlIjoiTHlhcUluaGlFYVhPSlFnclBUeEU1dmxvUnpQc1o1N1AzS1VCeTBGNVZTcUp1S1h3T293YUo3cUFxN0Y5WG5xQk94ckRUM3hqSytBVnpvUEpvRTJiUFE1WWJWOEdHS0swSjlwNitNLzRob2F6a0srdU5CaDZ0R1J2R0ZWMmhMMU0iLCJtYWMiOiIxMjNkNDFhZjJmNDk4MjFiMmM1ZTRmYmZlZDM1NGFkYjk4OGFiOWIzOTEyMzY5NGY0Y2E5ODRjNGY0Njk4NjliIiwidGFnIjoiIn0%3D
+      domain: 192.168.0.100
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: false
+    - id: c153499b-8ded-4504-8b37-5da0fdc17dc3
+      key: XSRF-TOKEN
+      value: eyJpdiI6InZBem43Y0RwbC9KRHZHMHVCVVN0YVE9PSIsInZhbHVlIjoiSnpVNUtFQjZDOHdCVEFBT21UWWdkZjQvNVhUQXVXV3JaaEFPVnB0R0FZVm10M2x1VEZ0dXVWQThPYlNCUjJuWllBKzRjQ2dYYTZhWWo3ZDh4aEsvaE1ydHNacFZvL3ZHYXFmdEwvenZjL1RYdy9PRzFpMUkrN2dHYW9pS1FqOGQiLCJtYWMiOiI1NmE5YTI0NDIxMTA3NWVmNTNmZWEzYWJkOWM3ZTVhY2Y2NDhjMTllNWZhNTIwNTIxNDc0NWFkMWY3NzJjNDc4IiwidGFnIjoiIn0%3D
+      domain: kms-laravel-magang-production.up.railway.app
+      path: /
+      secure: false
+      httpOnly: false
+      hostOnly: true
+    - id: 4b81f47c-ff51-43ff-9294-007bc9b9b9f6
+      key: laravel-session
+      value: eyJpdiI6IkpjNW9hWnM2UkZSMW5kMW8yWEROZ3c9PSIsInZhbHVlIjoicHQ3Vi93bTd2djNWVlkwMkY4Y2FIcEVCb00xVFBqN3ZHNnp4YlBtVzMxWGQ0RDZraVVPZWtKQUQxNDRHWkJhQ2dkZjhWMEN2Zys4ZTNwVHlOZjNUbldpRTJLQ1NKOXFRLzlqZUpNWkRlRkNsWGdlcWtZbVdYalhucVBoeGE5Y1ciLCJtYWMiOiIwYmRjZGY1ZGI0ZDRmNDg4YmViYmYzNDIzZjg2OTQ2ZGU5MDQ3MDdjYjdmZWRjN2JhZjgyMWI4NTJiNjlmODZiIiwidGFnIjoiIn0%3D
+      domain: kms-laravel-magang-production.up.railway.app
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_225e0076d3c74ec276c808720c25afe8c0c19108
+    created: 1770181816676
+    modified: 1770181816676
+    isPrivate: false

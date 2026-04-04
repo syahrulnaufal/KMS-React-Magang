@@ -100,15 +100,21 @@ export default function AddKnowledge({ editId }) {
       return;
     }
 
-    addKnowledge({
+    const payload = {
       title,
       content,
       systemId,
       featureId,
-      status: "draft",
+      status: "Draft",
       thumbnail,
       createdAt: new Date().toISOString(),
-    });
+    };
+
+    if (editId) {
+      updateKnowledge(Number(editId), payload);
+    } else {
+      addKnowledge(payload);
+    }
 
     localStorage.removeItem("knowledge_thumbnail");
     navigate("/knowledge");
@@ -128,15 +134,21 @@ export default function AddKnowledge({ editId }) {
         ? new Date(`${publishDate}T${publishTime}`).toISOString()
         : new Date().toISOString();
 
-    addKnowledge({
+    const payload = {
       title,
       content,
       systemId,
       featureId,
-      status: "published",
+      status: "Publish",
       thumbnail,
       createdAt: publishDateTime,
-    });
+    };
+
+    if (editId) {
+      updateKnowledge(Number(editId), payload);
+    } else {
+      addKnowledge(payload);
+    }
 
     localStorage.removeItem("knowledge_thumbnail");
     navigate("/knowledge");
@@ -240,11 +252,21 @@ export default function AddKnowledge({ editId }) {
 
           {/* PAPER */}
           <div className="editor-paper-card">
-            {isPreview ? (
+            <div style={{ display: isPreview ? "block" : "none" }}>
               <div className="preview-box">
                 <h2 className="preview-title">
                   {title || "Judul belum diisi"}
                 </h2>
+
+                {thumbnail && (
+                  <div className="sys-doc-thumbnail-banner" style={{ marginBottom: "24px", borderRadius: "12px", overflow: "hidden" }}>
+                    <img 
+                      src={thumbnail} 
+                      alt={title || "Thumbnail"} 
+                      style={{ width: "100%", maxHeight: "400px", objectFit: "cover", display: "block" }} 
+                    />
+                  </div>
+                )}
 
                 <div
                   className="preview-content"
@@ -253,9 +275,11 @@ export default function AddKnowledge({ editId }) {
                   }}
                 />
               </div>
-            ) : (
+            </div>
+
+            <div style={{ display: isPreview ? "none" : "block" }}>
               <KnowledgeEditor value={content} onChange={setContent} />
-            )}
+            </div>
           </div>
         </div>
 
@@ -297,12 +321,15 @@ export default function AddKnowledge({ editId }) {
               )}
             </div>
 
+            {!thumbnail && (
             <button
-              className="thumbnail-upload-btn"
-              onClick={() => fileInputRef.current.click()}
+            className="thumbnail-upload-btn"
+            onClick={() => fileInputRef.current.click()}
+            disabled={thumbnail}
             >
               Upload Thumbnail
             </button>
+            )}
 
             <input
               ref={fileInputRef}

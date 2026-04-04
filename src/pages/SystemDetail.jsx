@@ -27,7 +27,7 @@ export default function SystemDetail() {
   const filteredKnowledge = knowledge.filter(
     (item) =>
       item.status?.toLowerCase() === "publish" &&
-      Number(item.featureId) === Number(selectedFeature)
+      (Number(item.featureId) === Number(selectedFeature) || Number(item.feature) === Number(selectedFeature))
   );
 
   return (
@@ -108,6 +108,16 @@ export default function SystemDetail() {
                   <p className="sys-doc-desc">
                     Profil, dokumen, jabatan. Panduan lengkap penggunaan fitur ini.
                   </p>
+
+                  {item.thumbnail && (
+                    <div className="sys-doc-thumbnail-banner" style={{ marginBottom: "24px", borderRadius: "12px", overflow: "hidden" }}>
+                      <img 
+                        src={item.thumbnail} 
+                        alt={item.title} 
+                        style={{ width: "100%", maxHeight: "400px", objectFit: "cover", display: "block" }} 
+                      />
+                    </div>
+                  )}
 
                   <h3 className="sys-doc-heading">
                     <FiClipboard color="#d97706" fill="#fde68a" size={24}/> Gambaran Umum
