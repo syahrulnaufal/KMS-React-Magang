@@ -217,6 +217,11 @@
   grid-template-columns: 1fr;
 }
 
+.form-col{
+  display: flex;
+  flex-direction: column;
+}
+
 .modal-form input,
 .modal-form select {
   padding: 12px 14px;
