@@ -1056,7 +1056,7 @@ body[data-theme="dark"] {
   gap: 12px;
 }
 
-.btn-back-modern {
+/* .btn-back-modern {
   width: 46px;
   height: 46px;
   border-radius: 14px;
@@ -1074,7 +1074,7 @@ body[data-theme="dark"] {
   background: #d8e8ff;
   transform: translateY(-2px);
   box-shadow: var(--shadow-soft);
-}
+} */
 
 .btn-preview-modern {
   display: flex;

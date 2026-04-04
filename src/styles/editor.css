@@ -406,7 +406,7 @@
   gap: 12px;
 }
 
-/* BACK BUTTON */
+/* BACK BUTTON 
 .btn-back-modern {
   width: 46px;
   height: 46px;
@@ -428,7 +428,7 @@
   background: rgba(15, 118, 110, 0.14);
   transform: translateY(-2px);
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.12);
-}
+} */
 
 /* PREVIEW BUTTON */
 .btn-preview-modern {

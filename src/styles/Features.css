@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.btn-x-padding{
+  padding: 0px 0.5rem;
+}
+
 .feature-form {
   background: white;
   padding: 20px;

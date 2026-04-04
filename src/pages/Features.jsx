@@ -8,9 +8,10 @@ import "../styles/Features.css";
 
 export default function Features() {
   const { systems } = useSystems();
-  const { features, addFeature, deleteFeature } = useFeatures();
+  const { features, addFeature, deleteFeature, editFeature } = useFeatures();
 
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,22 +26,40 @@ export default function Features() {
     });
   };
 
-  const handleAddFeature = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Mencegah reload web ketika disubmit pakai Enter
     if (!formData.name || !formData.systemId) return;
 
-    addFeature(formData);
+    if (editingId) {
+      editFeature(editingId, formData);
+    } else {
+      addFeature(formData);
+    }
 
+    // Reset Form
     setFormData({
       name: "",
       systemId: "",
       status: "Active",
     });
-
+    setEditingId(null);
     setShowForm(false);
   };
 
+  const handleEdit = (feature) => {
+    setFormData({
+      name: feature.name,
+      systemId: feature.systemId,
+      status: feature.status || "Active", // Default jika kosong
+    });
+    setEditingId(feature.id);
+    setShowForm(true);
+  };
+
   const handleDelete = (id) => {
-    deleteFeature(id);
+    if (window.confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+      deleteFeature(id);
+    }
   };
 
   const getSystemName = (id) => {
@@ -59,15 +78,19 @@ export default function Features() {
 
             <button
               className="add-feature-btn"
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                setFormData({ name: "", systemId: "", status: "Active" });
+                setEditingId(null);
+                setShowForm(true);
+              }}
             >
               + Add Feature
             </button>
           </div>
 
           {showForm && (
-            <div className="feature-form">
-              <h3>Add Feature</h3>
+            <form className="feature-form" onSubmit={handleSubmit}>
+              <h3 style={{marginBottom: '0.5rem'}}>{editingId ? "Edit Feature" : "Add Feature"}</h3>
 
               <input
                 type="text"
@@ -75,6 +98,7 @@ export default function Features() {
                 placeholder="Feature Name"
                 value={formData.name}
                 onChange={handleChange}
+                autoFocus
               />
 
               <select
@@ -103,10 +127,22 @@ export default function Features() {
               </select>
 
               <div className="form-actions">
-                <button onClick={handleAddFeature}>Save</button>
-                <button onClick={() => setShowForm(false)}>Cancel</button>
+                {/* Wajib menggunakan type="submit" dan type="button" di dalam form */}
+                <button type="submit" className="btn-x-padding">
+                  Save
+                </button>
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setShowForm(false);
+                    setEditingId(null);
+                  }} 
+                  className="btn-x-padding"
+                >
+                  Cancel
+                </button>
               </div>
-            </div>
+            </form>
           )}
 
           <table className="features-table">
@@ -129,7 +165,12 @@ export default function Features() {
                   <td>{feature.status}</td>
 
                   <td>
-                    <button className="edit-btn">Edit</button>
+                    <button 
+                      className="edit-btn"
+                      onClick={() => handleEdit(feature)}
+                    >
+                      Edit
+                    </button>
 
                     <button
                       className="delete-btn"
