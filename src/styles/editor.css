@@ -67,6 +67,31 @@
   background: #ffffff !important;
 }
 
+.toolbar-holder {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  max-width: 100%;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Kustomisasi scrollbar untuk estetika */
+.toolbar-holder::-webkit-scrollbar {
+  height: 4px;
+}
+.toolbar-holder::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+.toolbar-holder .ql-formats {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: 12px !important;
+}
+
 .ql-container {
   /* border-radius: 0 0 12px 12px; */
   border: 1px solid #e5e7eb !important;
@@ -314,6 +339,7 @@
   border-radius: 14px;
   padding: 18px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  min-width: 0; /* PENTING: Mencegah elemen grid anak melar seukuran isi internalnya */
 }
 
 /* ===============================

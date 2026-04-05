@@ -196,7 +196,7 @@ export default function ManageUsers() {
         </main>
 
         {showModal && (
-          <div className="modal-overlay">
+          <div className="modal-overlay" >
             <div className="modal-box">
               <div className="modal-header" style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <h2>{editId ? "Edit User" : "Tambah User"}</h2>
@@ -205,6 +205,7 @@ export default function ManageUsers() {
                 </button>
               </div>
 
+              <div className="scroller">
               <form
                 className="modal-form"
                 onSubmit={(e) => {
@@ -315,6 +316,7 @@ export default function ManageUsers() {
                   </button>
                 </div>
               </form>
+              </div>
             </div>
           </div>
         )}

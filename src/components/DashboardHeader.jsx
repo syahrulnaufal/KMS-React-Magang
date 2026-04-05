@@ -9,7 +9,11 @@ export default function DashboardHeader() {
   if (location.pathname === "/users") {
     title = "Kelola User";
   } else if (location.pathname === "/knowledge") {
-    title = "Knowledge";
+    title = "Content";
+  } else if (location.pathname === "/features") {
+    title = "Feature";
+  } else if (location.pathname === "/addSystems") {
+    title = "System";
   }
 
   // Hanya tampilkan search & notif jika di dashboard

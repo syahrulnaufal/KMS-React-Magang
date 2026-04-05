@@ -30,15 +30,17 @@ export default function Dashboard() {
       <Sidebar />
 
       <div className="dashboard-main">
-        <DashboardHeader />
+        <div className="welcome-wrapper">
+          <DashboardHeader />
+          <div className="dashboard-welcome">
+            <h2>Selamat Datang, {user?.username || "Admin"}!</h2>
+            <p>Berikut adalah ikhtisar dari seluruh sistem pengetahuan Anda hari ini.</p>
+          </div>
+        </div>
 
         <main className="dashboard-content">
           {isDashboardHome && (
             <div className="dashboard-home-wrapper">
-              <div className="dashboard-welcome">
-                <h2>Selamat Datang, {user?.username || "Admin"}!</h2>
-                <p>Berikut adalah ikhtisar dari seluruh sistem pengetahuan Anda hari ini.</p>
-              </div>
 
               {/* STATS GRID */}
               <div className="modern-stats-grid">

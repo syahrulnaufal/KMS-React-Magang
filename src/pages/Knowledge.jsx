@@ -4,10 +4,13 @@ import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
 import { useKnowledge } from "../context/KnowledgeContext";
 import { useNavigate } from "react-router-dom";
+import { Pencil, Trash2 } from "lucide-react";
+import DashboardHeader from "../components/DashboardHeader";
 
 import "../styles/dashboard.css";
 import "../styles/editor.css";
 import "../styles/knowledge.css";
+import "../styles/manageusers.css";
 
 export default function Knowledge() {
   const { systems } = useSystems();
@@ -64,39 +67,44 @@ export default function Knowledge() {
     <div className="dashboard-container">
       <Sidebar />
       <div className="dashboard-main">
-        <div className="content-page">
-          <div className="content-header">
-            <h2>Postingan</h2>
-            <button
-              className="add-btn"
-              onClick={() => navigate("/knowledge/add")}
-            >
-              + Add Content
-            </button>
+        <DashboardHeader/>
+        <div className="content-page no-padding">
+          <div className="user-toolbar">
+            <div className="toolbar-right">
+              <div className="user-count">
+                Total Konten: <b>{knowledge.length}</b>
+              </div>
+
+              <button
+                className="btn-add"
+                onClick={() => navigate("/knowledge/add")}
+              >
+                + Add Content
+              </button>
+            </div>
           </div>
 
-          {/* LIST CONTENT */}
-
-          <div className="knowledge-list">
-            {knowledge.map((item) => (
-              <div key={item.id} className="knowledge-card">
-                <div className="knowledge-left">
-                  <div className="knowledge-thumb">{item.title?.charAt(0)}</div>
-
-                  <div className="knowledge-info">
-                    <h4>{item.title}</h4>
-
-                    <div className="knowledge-meta-row">
-                      <span className="meta-system">
-                        {getSystemName(item.systemId)}
-                      </span>
-
-                      <span className="meta-dot">•</span>
-
-                      <span className="meta-feature">
-                        {getFeatureName(item.featureId)}
-                      </span>
-
+          {/* LIST CONTENT as TABLE */}
+          <div className="user-table-wrapper">
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th>Judul Konten</th>
+                  <th>System</th>
+                  <th>Feature</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {knowledge.map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      <strong>{item.title}</strong>
+                    </td>
+                    <td>{getSystemName(item.systemId)}</td>
+                    <td>{getFeatureName(item.featureId)}</td>
+                    <td>
                       <span
                         className={
                           item.status === "Publish"
@@ -106,27 +114,37 @@ export default function Knowledge() {
                       >
                         {item.status}
                       </span>
-                    </div>
-                  </div>
-                </div>
+                    </td>
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          className="btn-action"
+                          onClick={() => navigate("/knowledge/edit/" + item.id)}
+                        >
+                          <Pencil size={16} />
+                        </button>
 
-                <div className="knowledge-actions">
-                  <button
-                    className="btn-edit"
-                    onClick={() => navigate("/knowledge/edit/" + item.id)}
-                  >
-                    Edit
-                  </button>
+                        <button
+                          className="btn-action"
+                          style={{ borderColor: "red" }}
+                          onClick={() => deleteKnowledge(item.id)}
+                        >
+                          <Trash2 size={16} color="red" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
 
-                  <button
-                    className="delete-btn"
-                    onClick={() => deleteKnowledge(item.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+                {knowledge.length === 0 && (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: "center" }}>
+                      Belum ada konten
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

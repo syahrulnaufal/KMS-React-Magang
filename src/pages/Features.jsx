@@ -2,9 +2,11 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
-
+import { Pencil, Trash2 } from "lucide-react";
+import DashboardHeader from "../components/DashboardHeader";
 import "../styles/dashboard.css";
 import "../styles/Features.css";
+import "../styles/manageusers.css";
 
 export default function Features() {
   const { systems } = useSystems();
@@ -72,20 +74,25 @@ export default function Features() {
       <Sidebar />
 
       <div className="dashboard-main">
-        <div className="features-page">
-          <div className="features-header">
-            <h2>Manage Features</h2>
+        <DashboardHeader />
+        <div className="features-page no-padding">
+          <div className="user-toolbar">
+            <div className="toolbar-right">
+              <div className="user-count">
+                Total Features: <b>{features.length}</b>
+              </div>
 
-            <button
-              className="add-feature-btn"
-              onClick={() => {
-                setFormData({ name: "", systemId: "", status: "Active" });
-                setEditingId(null);
-                setShowForm(true);
-              }}
-            >
-              + Add Feature
-            </button>
+              <button
+                className="btn-add"
+                onClick={() => {
+                  setFormData({ name: "", systemId: "", status: "Active" });
+                  setEditingId(null);
+                  setShowForm(true);
+                }}
+              >
+                + Add Feature
+              </button>
+            </div>
           </div>
 
           {showForm && (
@@ -145,52 +152,57 @@ export default function Features() {
             </form>
           )}
 
-          <table className="features-table">
-            <thead>
-              <tr>
-                <th>Feature Name</th>
-                <th>System</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {features.map((feature) => (
-                <tr key={feature.id}>
-                  <td>{feature.name}</td>
-
-                  <td>{getSystemName(feature.systemId)}</td>
-
-                  <td>{feature.status}</td>
-
-                  <td>
-                    <button 
-                      className="edit-btn"
-                      onClick={() => handleEdit(feature)}
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(feature.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-
-              {features.length === 0 && (
+          <div className="user-table-wrapper">
+            <table className="user-table">
+              <thead>
                 <tr>
-                  <td colSpan="4" style={{ textAlign: "center" }}>
-                    No features yet
-                  </td>
+                  <th>Feature Name</th>
+                  <th>System</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {features.map((feature) => (
+                  <tr key={feature.id}>
+                    <td>{feature.name}</td>
+
+                    <td>{getSystemName(feature.systemId)}</td>
+
+                    <td>{feature.status}</td>
+
+                    <td>
+                      <div className="action-buttons">
+                        <button 
+                          className="btn-action"
+                          onClick={() => handleEdit(feature)}
+                        >
+                          <Pencil size={16} />
+                        </button>
+
+                        <button
+                          className="btn-action"
+                          style={{ borderColor: "red" }}
+                          onClick={() => handleDelete(feature.id)}
+                        >
+                          <Trash2 size={16} color="red" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+                {features.length === 0 && (
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "center" }}>
+                      No features yet
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

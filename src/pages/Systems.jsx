@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { useSystems } from "../context/SystemContext";
+import { Pencil, Trash2 } from "lucide-react";
+import DashboardHeader from "../components/DashboardHeader";
 
 import "../styles/Systems.css";
 import "../styles/dashboard.css";
+import "../styles/manageusers.css";
 
 export default function Systems() {
   const { systems, addSystem, deleteSystem, editSystem } = useSystems();
@@ -72,19 +75,24 @@ export default function Systems() {
       <Sidebar />
 
       <div className="dashboard-main">
-        <div className="systems-page">
-          <div className="systems-header">
-            <h2>Manage Systems</h2>
+        <DashboardHeader />
+        <div className="systems-page no-padding">
+          <div className="user-toolbar">
+            <div className="toolbar-right">
+              <div className="user-count">
+                Total Systems: <b>{systems.length}</b>
+              </div>
 
-            <button
-              className="add-system-btn"
-              onClick={() => {
-                resetForm();
-                setShowForm(true);
-              }}
-            >
-              + Add System
-            </button>
+              <button
+                className="btn-add"
+                onClick={() => {
+                  resetForm();
+                  setShowForm(true);
+                }}
+              >
+                + Add System
+              </button>
+            </div>
           </div>
 
           {showForm && (
@@ -122,37 +130,44 @@ export default function Systems() {
             </div>
           )}
 
-          <table className="systems-table">
-            <thead>
-              <tr>
-                <th>System Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {systems.map((sys) => (
-                <tr key={sys.id}>
-                  <td>{sys.name}</td>
-                  <td>{sys.description}</td>
-                  <td>{sys.status}</td>
-
-                  <td>
-                    <button className="edit-btn" onClick={() => handleEditClick(sys)}>Edit</button>
-
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(sys.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+          <div className="user-table-wrapper">
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th>System Name</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {systems.map((sys) => (
+                  <tr key={sys.id}>
+                    <td>{sys.name}</td>
+                    <td>{sys.description}</td>
+                    <td>{sys.status}</td>
+
+                    <td>
+                      <div className="action-buttons">
+                        <button className="btn-action" onClick={() => handleEditClick(sys)}>
+                          <Pencil size={16} />
+                        </button>
+
+                        <button
+                          className="btn-action"
+                          style={{ borderColor: "red" }}
+                          onClick={() => handleDelete(sys.id)}
+                        >
+                          <Trash2 size={16} color="red" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

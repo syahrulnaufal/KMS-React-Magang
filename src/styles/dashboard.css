@@ -45,7 +45,7 @@
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   margin-bottom: 30px;
-
+  gap: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -89,7 +89,7 @@
   outline: none;
   background: transparent;
   font-size: 13px;
-  width: 220px;
+  width: 60%;
   color: var(--navy);
   font-weight: 600;
 }
@@ -389,8 +389,14 @@ button.kms-logout:hover {
   gap: 30px;
 }
 
+.welcome-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .dashboard-welcome {
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
+  padding-left: 0.5rem;
 }
 
 .dashboard-welcome h2 {
@@ -558,5 +564,40 @@ button.kms-logout:hover {
 @media (max-width: 1024px) {
   .dashboard-bottom-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==================================
+   MOBILE MAIN LAYOUT (NEW)
+================================== */
+@media (max-width: 768px) {
+  .dashboard-main {
+    padding: 85px 15px 20px 15px !important;
+  }
+  
+  .dashboard-content-modern {
+    padding: 15px !important;
+  }
+
+  .dashboard-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .dashboard-search {
+    width: 100%;
+  }
+
+  .dashboard-search input {
+    width: 100%;
+  }
+
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-wrapper {
+    flex-flow: column-reverse;
   }
 }

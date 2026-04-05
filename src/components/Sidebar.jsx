@@ -1,4 +1,5 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 import {
   LayoutDashboard,
   BookOpen,
@@ -7,6 +8,8 @@ import {
   Layers,
   FolderTree,
   Image,
+  Menu,
+  X
 } from "lucide-react";
 import { useAuth } from "../auth/AuthContext";
 import logo from "../assets/logo.png";
@@ -16,6 +19,11 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 768) setIsOpen(false);
+  };
 
   const handleLogout = () => {
     logout();
@@ -30,7 +38,22 @@ export default function Sidebar() {
   const isMedia = location.pathname.startsWith("/media");
 
   return (
-    <aside className="kms-sidebar">
+    <>
+      {/* MOBILE HEADER (Hanya nampak di layar HP) */}
+      <div className="mobile-top-header">
+        <div className="mobile-brand">
+          {/* <img src={logo} alt="Logo" width={'100%'}/> */}
+          <span>KMS Admin</span>
+        </div>
+        <button className="mobile-toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X size={26} /> : <Menu size={26} />}
+        </button>
+      </div>
+
+      {/* OVERLAY BELAKANG */}
+      <div className={`sidebar-overlay ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(false)}></div>
+
+      <aside className={`kms-sidebar ${isOpen ? "open" : ""}`}>
       <div className="kms-sidebar-header">
         <div className="sidebar-brand">
           <img src={logo} alt="RBS Logo" />
@@ -41,6 +64,7 @@ export default function Sidebar() {
         {/* DASHBOARD */}
         <NavLink
           to="/dashboard"
+          onClick={handleLinkClick}
           className={`kms-menu-item ${isDashboard ? "active" : ""}`}
         >
           <LayoutDashboard size={18} />
@@ -50,6 +74,7 @@ export default function Sidebar() {
         {/* CONTENT */}
         <NavLink
           to="/knowledge"
+          onClick={handleLinkClick}
           className={`kms-menu-item ${isKnowledge ? "active" : ""}`}
         >
           <BookOpen size={18} />
@@ -59,6 +84,7 @@ export default function Sidebar() {
         {/* SYSTEM MANAGEMENT */}
         <NavLink
           to="/addSystems"
+          onClick={handleLinkClick}
           className={`kms-menu-item ${isSystems ? "active" : ""}`}
         >
           <Layers size={18} />
@@ -68,6 +94,7 @@ export default function Sidebar() {
         {/* FEATURE MANAGEMENT */}
         <NavLink
           to="/features"
+          onClick={handleLinkClick}
           className={`kms-menu-item ${isFeatures ? "active" : ""}`}
         >
           <FolderTree size={18} />
@@ -78,6 +105,7 @@ export default function Sidebar() {
         {user?.role === "superadmin" && (
           <NavLink
             to="/users"
+            onClick={handleLinkClick}
             className={`kms-menu-item ${isUsers ? "active" : ""}`}
           >
             <Users size={18} />
@@ -93,5 +121,6 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+    </>
   );
 }
