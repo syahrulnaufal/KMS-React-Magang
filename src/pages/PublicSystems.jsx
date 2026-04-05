@@ -65,7 +65,7 @@ export default function PublicSystems() {
 
               <h3>{sys.name}</h3>
 
-              <p>Dokumentasi sistem internal perusahaan</p>
+              <p>{sys.description}</p>
 
               <div className="system-footer">
                 <span className="guide">{systemFeatures.length} fitur</span>

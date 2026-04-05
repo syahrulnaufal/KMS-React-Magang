@@ -25,7 +25,7 @@ export default function Sidebar() {
   const isDashboard = location.pathname === "/dashboard";
   const isKnowledge = location.pathname.startsWith("/knowledge");
   const isUsers = location.pathname.startsWith("/users");
-  const isSystems = location.pathname.startsWith("/systems");
+  const isSystems = location.pathname.startsWith("/addSystems");
   const isFeatures = location.pathname.startsWith("/features");
   const isMedia = location.pathname.startsWith("/media");
 
@@ -58,7 +58,7 @@ export default function Sidebar() {
 
         {/* SYSTEM MANAGEMENT */}
         <NavLink
-          to="/systems"
+          to="/addSystems"
           className={`kms-menu-item ${isSystems ? "active" : ""}`}
         >
           <Layers size={18} />

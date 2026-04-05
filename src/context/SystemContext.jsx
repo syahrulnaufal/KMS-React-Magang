@@ -55,6 +55,13 @@ export function SystemProvider({ children }) {
     setSystems(systems.filter((sys) => sys.id !== id));
   };
 
+  // edit system
+  const editSystem = (id, updatedData) => {
+    setSystems(
+      systems.map((sys) => (sys.id === id ? { ...sys, ...updatedData } : sys))
+    );
+  };
+
   // tambah menu ke system
   const addMenu = (systemId, menu) => {
     setSystems(
@@ -89,6 +96,7 @@ export function SystemProvider({ children }) {
         systems,
         addSystem,
         deleteSystem,
+        editSystem,
         addMenu,
         deleteMenu,
       }}

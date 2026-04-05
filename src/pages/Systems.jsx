@@ -6,9 +6,10 @@ import "../styles/Systems.css";
 import "../styles/dashboard.css";
 
 export default function Systems() {
-  const { systems, addSystem, deleteSystem } = useSystems();
+  const { systems, addSystem, deleteSystem, editSystem } = useSystems();
 
   const [showForm, setShowForm] = useState(false);
+  const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,22 +24,47 @@ export default function Systems() {
     });
   };
 
-  const handleAddSystem = () => {
-    if (!formData.name) return;
+  const handleSubmit = () => {
+    if (!formData.name.trim()) return;
 
-    addSystem(formData);
+    if (editId) {
+      editSystem(editId, formData);
+    } else {
+      addSystem(formData);
+    }
+    resetForm();
+  };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  const resetForm = () => {
     setFormData({
       name: "",
       description: "",
       status: "Active",
     });
-
+    setEditId(null);
     setShowForm(false);
   };
 
+  const handleEditClick = (sys) => {
+    setFormData({
+      name: sys.name,
+      description: sys.description,
+      status: sys.status,
+    });
+    setEditId(sys.id);
+    setShowForm(true);
+  };
+
   const handleDelete = (id) => {
-    deleteSystem(id);
+    if (window.confirm("Apakah Anda yakin ingin menghapus system ini?")) {
+      deleteSystem(id);
+    }
   };
 
   return (
@@ -52,15 +78,18 @@ export default function Systems() {
 
             <button
               className="add-system-btn"
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                resetForm();
+                setShowForm(true);
+              }}
             >
               + Add System
             </button>
           </div>
 
           {showForm && (
-            <div className="system-form">
-              <h3>Add System</h3>
+            <div className="system-form" onKeyDown={handleKeyDown}>
+              <h3>{editId ? "Edit System" : "Add System"}</h3>
 
               <input
                 type="text"
@@ -87,9 +116,8 @@ export default function Systems() {
               </select>
 
               <div className="form-actions">
-                <button onClick={handleAddSystem}>Save</button>
-
-                <button onClick={() => setShowForm(false)}>Cancel</button>
+                <button onClick={handleSubmit} style={{padding: '0.2rem 0.5rem'}}>Save</button>
+                <button onClick={resetForm} style={{padding: '0.2rem 0.5rem'}}>Cancel</button>
               </div>
             </div>
           )}
@@ -112,7 +140,7 @@ export default function Systems() {
                   <td>{sys.status}</td>
 
                   <td>
-                    <button className="edit-btn">Edit</button>
+                    <button className="edit-btn" onClick={() => handleEditClick(sys)}>Edit</button>
 
                     <button
                       className="delete-btn"

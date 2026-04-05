@@ -85,7 +85,7 @@ function App() {
         />
 
         <Route
-          path="/systems"
+          path="/addSystems"
           element={
             <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
               <Systems />
