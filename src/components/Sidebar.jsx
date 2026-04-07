@@ -43,7 +43,8 @@ export default function Sidebar() {
       <div className="mobile-top-header">
         <div className="mobile-brand">
           {/* <img src={logo} alt="Logo" width={'100%'}/> */}
-          <span>KMS Admin</span>
+          <div className="mobile-logo"></div>
+          {/* <span>KMS Admin</span> */}
         </div>
         <button className="mobile-toggle-btn" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={26} /> : <Menu size={26} />}
