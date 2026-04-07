@@ -2948,6 +2948,140 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+/* ================= POPULAR SYSTEMS SECTION ================= */
+
+.popular-systems-section {
+  background-color: #f4f8fc;
+  padding: 60px 40px;
+}
+
+.popular-systems-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.popular-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.popular-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.popular-badge {
+  background-color: #e5edff;
+  color: #3b82f6;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.popular-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.popular-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.07);
+}
+
+.popular-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background-color: #e5edff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1d4ed8;
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.popular-body {
+  flex-grow: 1;
+  margin-bottom: 24px;
+}
+
+.popular-card-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.popular-category {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.popular-category .icon-small {
+  font-size: 12px;
+}
+
+.popular-footer {
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popular-article-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.popular-article-count .icon-small {
+  font-size: 12px;
+}
+
+.popular-footer .icon-arrow {
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .popular-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .popular-systems-section {
+    padding: 40px 20px;
+  }
+  .popular-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* Header */
 .rbs-latest-header {

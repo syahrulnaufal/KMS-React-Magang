@@ -16,6 +16,14 @@ import {
   FaChartLine,
   FaUsers,
   FaBookOpen,
+  FaBoxes,
+  FaHeadset,
+  FaProjectDiagram,
+  FaShoppingCart,
+  FaServer,
+  FaUserAlt,
+  FaFileAlt,
+  FaChevronRight,
 } from "react-icons/fa";
 
 import { FaXTwitter } from "react-icons/fa6";
@@ -55,6 +63,15 @@ export default function PublicDashboard() {
       desc: "Mengenal para pemimpin teknologi wanita yang mendorong inovasi di Readymix.",
       img: highlight4,
     },
+  ];
+
+  const popularSystemsMock = [
+    { id: 1, title: "HRIS Pro", category: "HR & Manajemen", icons: <FaUsers/>, count: 34 },
+    { id: 2, title: "Inventory Ops", category: "Logistik", icons: <FaBoxes/>, count: 42 },
+    { id: 3, title: "Helpdesk Ticketing", category: "IT Support", icons: <FaHeadset/>, count: 31 },
+    { id: 4, title: "Project Collab", category: "PMO", icons: <FaProjectDiagram/>, count: 36 },
+    { id: 5, title: "Pengadaan (Procure)", category: "Purchasing", icons: <FaShoppingCart/>, count: 33 },
+    { id: 6, title: "IT Infra", category: "Infra", icons: <FaServer/>, count: 44 },
   ];
 
   return (
@@ -115,6 +132,40 @@ export default function PublicDashboard() {
               >
                 {item.icon}
                 <span>{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= POPULAR SYSTEMS ================= */}
+      <section className="popular-systems-section">
+        <div className="popular-systems-container">
+          <div className="popular-header">
+            <h2 className="popular-title">Sistem populer</h2>
+            <span className="popular-badge">sering diakses</span>
+          </div>
+
+          <div className="popular-grid">
+            {popularSystemsMock.map((system) => (
+              <div key={system.id} className="popular-card">
+                <div className="popular-icon-wrapper">
+                  {system.icons}
+                </div>
+
+                <div className="popular-body">
+                  <h3 className="popular-card-title">{system.title}</h3>
+                  <div className="popular-category">
+                    <FaUserAlt className="icon-small" /> {system.category}
+                  </div>
+                </div>
+
+                <div className="popular-footer">
+                  <div className="popular-article-count">
+                    <FaFileAlt className="icon-small" /> {system.count} artikel
+                  </div>
+                  <FaChevronRight className="icon-arrow" />
+                </div>
               </div>
             ))}
           </div>
