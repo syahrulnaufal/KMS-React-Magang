@@ -4,6 +4,7 @@ import { useFeatures } from "../context/FeatureContext";
 import { FiSearch } from "react-icons/fi";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import * as FaIcons from "react-icons/fa";
 
 import "../styles/public.css";
 
@@ -64,7 +65,18 @@ export default function PublicSystems() {
               className="system-card"
               onClick={() => navigate(`/systems/${sys.id}`)}
             >
-              <div className="system-icon"></div>
+              <div className="system-icon" style={{ overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {(() => {
+                  if (sys.logo && FaIcons[sys.logo]) {
+                    const IconComp = FaIcons[sys.logo];
+                    return <IconComp style={{ fontSize: "2rem", color: "#3b82f6" }} />;
+                  } else if (sys.logo) {
+                    return <img src={sys.logo} alt={sys.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
+                  } else {
+                    return <span style={{ fontSize: "2rem", fontWeight: "bold", color: "#3b82f6" }}>{sys.name.charAt(0)}</span>;
+                  }
+                })()}
+              </div>
 
               <h3>{sys.name}</h3>
 

@@ -946,3 +946,28 @@
 .ql-toolbar select.ql-size {
   display: none !important;
 }
+
+/* ===============================
+   QUILL VIDEO RESPONSIVE EMBED FIX
+================================ */
+.ql-editor iframe.ql-video, 
+.preview-content iframe.ql-video, 
+.sys-doc-body iframe.ql-video {
+  width: 100% !important;
+  max-width: 1000px;
+  max-height: 560px;
+  min-height: 350px;
+  margin: 24px auto !important;
+  display: block !important;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 768px) {
+  .ql-editor iframe.ql-video, 
+  .preview-content iframe.ql-video, 
+  .sys-doc-body iframe.ql-video {
+    width: 100% !important;
+    min-height: 250px;
+  }
+}

@@ -167,6 +167,16 @@
   color: white;
 }
 
+.btn-delete{
+  border-color: red !important;
+  color: red !important;
+}
+
+.btn-delete:hover{
+  background: red !important;
+  color: white !important;
+}
+
 /* ==============================
    MODAL
 ================================ */

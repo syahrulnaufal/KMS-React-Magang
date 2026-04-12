@@ -4,6 +4,7 @@ import { useFeatures } from "../context/FeatureContext";
 import { useKnowledge } from "../context/KnowledgeContext";
 import { useState } from "react";
 import { FiArrowLeft, FiUsers, FiFileText, FiList, FiFolder, FiClock, FiCalendar, FiClipboard } from "react-icons/fi";
+import * as FaIcons from "react-icons/fa";
 
 import "../styles/public.css";
 import "../styles/modern-beautify.css";
@@ -44,8 +45,17 @@ export default function SystemDetail() {
       <div className="system-main-card">
         {/* HEADER */}
         <div className="system-header-modern">
-          <div className="system-logo-modern">
-            <FiUsers size={42} />
+          <div className="system-logo-modern" style={{ overflow: "hidden" }}>
+            {(() => {
+              if (system?.logo && FaIcons[system.logo]) {
+                const IconComp = FaIcons[system.logo];
+                return <IconComp size={42} />;
+              } else if (system?.logo) {
+                return <img src={system.logo} alt={system?.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
+              } else {
+                return <FiUsers size={42} />;
+              }
+            })()}
           </div>
           <div className="system-title-section">
             <h1>{system?.name || "Sistem"}</h1>

@@ -179,11 +179,10 @@ export default function ManageUsers() {
                             <Pencil size={16} />
                           </button>
                           <button
-                            className="btn-action"
+                            className="btn-action btn-delete"
                             onClick={() => deleteUser(u.id)}
-                            style={{borderColor: 'red'}}
                           >
-                            <Trash2 size={16} style={{color: 'red'}}/>
+                            <Trash2 size={16}/>
                           </button>
                         </div>
                       </td>

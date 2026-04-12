@@ -179,7 +179,7 @@ export default function Features() {
                   <th>Feature Name</th>
                   <th>System</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th><div style={{textAlign: "center"}}>Action</div></th>
                 </tr>
               </thead>
 
@@ -202,11 +202,10 @@ export default function Features() {
                         </button>
 
                         <button
-                          className="btn-action"
-                          style={{ borderColor: "red" }}
+                          className="btn-action btn-delete"
                           onClick={() => handleDelete(feature.id)}
                         >
-                          <Trash2 size={16} color="red" />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </td>

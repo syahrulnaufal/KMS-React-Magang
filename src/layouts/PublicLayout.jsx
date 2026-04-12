@@ -10,10 +10,10 @@ export default function PublicLayout() {
     <div className="public-wrapper">
       <header className="public-header">
         <div className="public-header-container">
-          <div className="public-logo-area">
+          <a href="/" className="public-logo-area" style={{ textDecoration: "none" }}>
             <img src={logoImg} alt="RBS Logo" className="public-logo-img" />
             <span className="public-logo-text">READYMIX BUSINESS SOLUTION</span>
-          </div>
+          </a>
 
           <nav className="public-top-nav">
             {menus.map((menu) => (

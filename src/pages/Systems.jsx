@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { useSystems } from "../context/SystemContext";
 import { Pencil, Trash2, X } from "lucide-react";
+import * as FaIcons from "react-icons/fa";
 import DashboardHeader from "../components/DashboardHeader";
 
 import "../styles/Systems.css";
@@ -18,6 +19,7 @@ export default function Systems() {
     name: "",
     description: "",
     status: "Active",
+    logo: "",
   });
 
   const handleChange = (e) => {
@@ -49,6 +51,7 @@ export default function Systems() {
       name: "",
       description: "",
       status: "Active",
+      logo: "",
     });
     setEditId(null);
     setShowForm(false);
@@ -59,6 +62,7 @@ export default function Systems() {
       name: sys.name,
       description: sys.description,
       status: sys.status,
+      logo: sys.logo || "",
     });
     setEditId(sys.id);
     setShowForm(true);
@@ -132,6 +136,19 @@ export default function Systems() {
                         />
                       </div>
                     </div>
+                    
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>Nama Ikon FontAwesome (cth: FaDesktop) / URL Gambar</label>
+                        <input
+                          type="text"
+                          name="logo"
+                          placeholder="FaLaptop / https://..."
+                          value={formData.logo}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
 
                     <div className="form-row-full">
                       <div className="form-col">
@@ -165,16 +182,29 @@ export default function Systems() {
             <table className="user-table">
               <thead>
                 <tr>
+                  <th style={{ width: "60px", textAlign: "center" }}>Logo</th>
                   <th>System Name</th>
                   <th>Description</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th><div style={{textAlign: "center"}}>Action</div></th>
                 </tr>
               </thead>
 
               <tbody>
                 {systems.map((sys) => (
                   <tr key={sys.id}>
+                    <td style={{ textAlign: "center" }}>
+                      {(() => {
+                        if (sys.logo && FaIcons[sys.logo]) {
+                          const IconComp = FaIcons[sys.logo];
+                          return <IconComp size={20} color="#3b82f6" />;
+                        } else if (sys.logo && sys.logo.startsWith("http")) {
+                          return <img src={sys.logo} alt="logo" style={{ width: "24px", height: "24px", objectFit: "cover", borderRadius: "4px" }} />;
+                        } else {
+                          return <span style={{ color: "#94a3b8" }}>-</span>;
+                        }
+                      })()}
+                    </td>
                     <td>{sys.name}</td>
                     <td>{sys.description}</td>
                     <td>{sys.status}</td>
@@ -186,11 +216,10 @@ export default function Systems() {
                         </button>
 
                         <button
-                          className="btn-action"
-                          style={{ borderColor: "red" }}
+                          className="btn-action btn-delete"
                           onClick={() => handleDelete(sys.id)}
                         >
-                          <Trash2 size={16} color="red" />
+                          <Trash2 size={16}/>
                         </button>
                       </div>
                     </td>
