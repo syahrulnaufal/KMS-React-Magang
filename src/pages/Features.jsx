@@ -2,7 +2,7 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
 import "../styles/dashboard.css";
 import "../styles/Features.css";
@@ -96,60 +96,80 @@ export default function Features() {
           </div>
 
           {showForm && (
-            <form className="feature-form" onSubmit={handleSubmit}>
-              <h3 style={{marginBottom: '0.5rem'}}>{editingId ? "Edit Feature" : "Add Feature"}</h3>
+            <div className="modal-overlay">
+              <div className="modal-box">
+                <div className="modal-header" style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h2>{editingId ? "Edit Feature" : "Add Feature"}</h2>
+                  <button type="button" onClick={() => { setShowForm(false); setEditingId(null); }} style={{ background: "transparent", border: "none", cursor: "pointer" }}>
+                    <X size={24} color="#64748b" />
+                  </button>
+                </div>
+                <div className="scroller">
+                  <form className="modal-form" onSubmit={handleSubmit}>
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>Feature Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Feature Name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          autoFocus
+                        />
+                      </div>
+                    </div>
 
-              <input
-                type="text"
-                name="name"
-                placeholder="Feature Name"
-                value={formData.name}
-                onChange={handleChange}
-                autoFocus
-              />
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>System</label>
+                        <select
+                          name="systemId"
+                          value={formData.systemId}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select System</option>
+                          {systems
+                            .filter((sys) => sys.status === "Active")
+                            .map((sys) => (
+                              <option key={sys.id} value={sys.id}>
+                                {sys.name}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    </div>
 
-              <select
-                name="systemId"
-                value={formData.systemId}
-                onChange={handleChange}
-              >
-                <option value="">Select System</option>
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>Status</label>
+                        <select
+                          name="status"
+                          value={formData.status}
+                          onChange={handleChange}
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
 
-                {systems
-                  .filter((sys) => sys.status === "Active")
-                  .map((sys) => (
-                    <option key={sys.id} value={sys.id}>
-                      {sys.name}
-                    </option>
-                  ))}
-              </select>
-
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-
-              <div className="form-actions">
-                {/* Wajib menggunakan type="submit" dan type="button" di dalam form */}
-                <button type="submit" className="btn-x-padding">
-                  Save
-                </button>
-                <button 
-                  type="button" 
-                  onClick={() => {
-                    setShowForm(false);
-                    setEditingId(null);
-                  }} 
-                  className="btn-x-padding"
-                >
-                  Cancel
-                </button>
+                    <div className="modal-actions">
+                      <button 
+                        type="button" 
+                        onClick={() => { setShowForm(false); setEditingId(null); }} 
+                        className="btn-cancel"
+                      >
+                        Cancel
+                      </button>
+                      <button type="submit" className="btn-save">
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </form>
+            </div>
           )}
 
           <div className="user-table-wrapper">

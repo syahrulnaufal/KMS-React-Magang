@@ -77,8 +77,11 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   background: var(--modern-bg-gradient) !important;
   position: relative;
   overflow: hidden;
-  padding: 50px 100px !important;
+  padding: 0px 100px !important;
   height: 90dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Fluid bg glow */
@@ -102,7 +105,6 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  margin-bottom: 30px !important;
   font-weight: 800 !important;
   letter-spacing: -1px;
 }
@@ -123,8 +125,9 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   border-radius: 100px;
   display: inline-flex;
   align-items: center;
+  width: fit-content;
   gap: 8px;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
 }
 .badge-dot {
   width: 8px;
@@ -694,4 +697,69 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   max-width: 100%;
   border-radius: 12px;
   margin: 20px 0;
+}
+
+/* ===============================
+   HERO RESPONSIVE FIXES
+   ================================ */
+
+@media (max-width: 1024px) {
+  .kms-hero {
+    padding: 60px 40px !important;
+    height: auto !important;
+    min-height: 90dvh;
+  }
+  .kms-hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+  .kms-hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .kms-title {
+    font-size: 3rem !important;
+  }
+  .kms-hero-right {
+    /* grid-template-columns: repeat(3, 1fr) !important;
+    width: 100%; */
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .kms-hero {
+    padding: 40px 20px !important;
+  }
+  .kms-title {
+    font-size: 2.2rem !important;
+  }
+  .kms-desc {
+    font-size: 1rem !important;
+  }
+  .kms-hero-right {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .kms-title {
+    font-size: 1.8rem !important;
+  }
+  .kms-hero-right {
+    grid-template-columns: auto auto !important;
+    gap: 12px !important;
+    padding: 20px !important;
+  }
+  .kms-system-card {
+    padding: 16px !important;
+  }
+  .kms-system-card svg {
+    font-size: 20px !important;
+  }
+  .kms-system-card span {
+    font-size: 13px !important;
+  }
 }

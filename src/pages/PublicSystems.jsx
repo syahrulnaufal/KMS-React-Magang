@@ -49,6 +49,9 @@ export default function PublicSystems() {
         </div>
       </section>
 
+      <div className="link-back">
+        <a href="/">Home </a> / <span><a href="/systems">Panduan Sistem</a></span>
+      </div>
       <div className="systems-grid">
         {filteredSystems.map((sys) => {
           const systemFeatures = features.filter(

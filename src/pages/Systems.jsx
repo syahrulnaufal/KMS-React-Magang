@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { useSystems } from "../context/SystemContext";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 import DashboardHeader from "../components/DashboardHeader";
 
 import "../styles/Systems.css";
@@ -96,36 +96,67 @@ export default function Systems() {
           </div>
 
           {showForm && (
-            <div className="system-form" onKeyDown={handleKeyDown}>
-              <h3>{editId ? "Edit System" : "Add System"}</h3>
+            <div className="modal-overlay">
+              <div className="modal-box">
+                <div className="modal-header" style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h2>{editId ? "Edit System" : "Add System"}</h2>
+                  <button type="button" onClick={resetForm} style={{ background: "transparent", border: "none", cursor: "pointer" }}>
+                    <X size={24} color="#64748b" />
+                  </button>
+                </div>
+                <div className="scroller">
+                  <form className="modal-form" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>System Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="System Name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          autoFocus
+                        />
+                      </div>
+                    </div>
 
-              <input
-                type="text"
-                name="name"
-                placeholder="System Name"
-                value={formData.name}
-                onChange={handleChange}
-              />
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>Description</label>
+                        <textarea
+                          name="description"
+                          placeholder="Description"
+                          value={formData.description}
+                          onChange={handleChange}
+                          style={{ minHeight: '100px', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '12px' }}
+                        />
+                      </div>
+                    </div>
 
-              <textarea
-                name="description"
-                placeholder="Description"
-                value={formData.description}
-                onChange={handleChange}
-              />
+                    <div className="form-row-full">
+                      <div className="form-col">
+                        <label style={{ margin: '0 0 0.5rem 0.5rem' }}>Status</label>
+                        <select
+                          name="status"
+                          value={formData.status}
+                          onChange={handleChange}
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
 
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-
-              <div className="form-actions">
-                <button onClick={handleSubmit} style={{padding: '0.2rem 0.5rem'}}>Save</button>
-                <button onClick={resetForm} style={{padding: '0.2rem 0.5rem'}}>Cancel</button>
+                    <div className="modal-actions">
+                      <button type="button" className="btn-cancel" onClick={resetForm}>
+                        Cancel
+                      </button>
+                      <button type="submit" className="btn-save">
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           )}

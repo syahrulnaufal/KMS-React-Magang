@@ -96,14 +96,6 @@ export default function PublicDashboard() {
               referensi tech stack, dan akses untuk setiap pengguna.
             </p>
 
-            <div className="public-about-buttons">
-              <button
-                className="public-about-btn primary"
-                onClick={() => navigate("/panduan-sistem")}
-              >
-                Jelajahi Solusi <FaArrowRight />
-              </button>
-            </div>
           </div>
 
           <div className="kms-hero-right">
@@ -169,6 +161,14 @@ export default function PublicDashboard() {
               </div>
             ))}
           </div>
+          <div className="public-about-buttons">
+              <button
+                className="public-about-btn primary"
+                onClick={() => navigate("/panduan-sistem")}
+              >
+                Jelajahi Solusi <FaArrowRight />
+              </button>
+            </div>
         </div>
       </section>
 
