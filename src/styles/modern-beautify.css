@@ -211,6 +211,14 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 .products-grid{
   margin-top: 3rem;
 }
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
 .products-section-modern {
   background: #f8fafc !important;
   padding: 100px 0 !important;
@@ -330,7 +338,7 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
    HIGHLIGHTS SECTION (ACCORDION)
    ================================ */
 .petronas-highlights-section {
-  padding: 120px 100px !important;
+  padding: 60px 80px !important;
   background: white !important;
 }
 
@@ -703,7 +711,7 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
    HERO RESPONSIVE FIXES
    ================================ */
 
-@media (max-width: 1024px) {
+@media (max-width: 1115px) {
   .kms-hero {
     padding: 60px 40px !important;
     height: auto !important;

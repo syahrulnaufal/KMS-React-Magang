@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../styles/public.css";
 import "../styles/modern-beautify.css";
+import { useSystems } from "../context/SystemContext";
+import { useFeatures } from "../context/FeatureContext";
 
 import {
   FaFacebookF,
@@ -28,6 +30,7 @@ import {
 
 import { FaXTwitter } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import * as FaIcons from "react-icons/fa";
 
 import highlight1 from "../assets/highlight/1.png";
 import highlight2 from "../assets/highlight/2.png";
@@ -65,14 +68,10 @@ export default function PublicDashboard() {
     },
   ];
 
-  const popularSystemsMock = [
-    { id: 1, title: "HRIS Pro", category: "HR & Manajemen", icons: <FaUsers/>, count: 34 },
-    { id: 2, title: "Inventory Ops", category: "Logistik", icons: <FaBoxes/>, count: 42 },
-    { id: 3, title: "Helpdesk Ticketing", category: "IT Support", icons: <FaHeadset/>, count: 31 },
-    { id: 4, title: "Project Collab", category: "PMO", icons: <FaProjectDiagram/>, count: 36 },
-    { id: 5, title: "Pengadaan (Procure)", category: "Purchasing", icons: <FaShoppingCart/>, count: 33 },
-    { id: 6, title: "IT Infra", category: "Infra", icons: <FaServer/>, count: 44 },
-  ];
+  const { systems } = useSystems();
+  const { features } = useFeatures();
+
+  const popularSystems = systems.slice(0, 6);
 
   return (
     <div className="public-wrapper">
@@ -139,27 +138,45 @@ export default function PublicDashboard() {
           </div>
 
           <div className="popular-grid">
-            {popularSystemsMock.map((system) => (
-              <div key={system.id} className="popular-card">
-                <div className="popular-icon-wrapper">
-                  {system.icons}
+            {popularSystems.map((sys) => {
+              const systemFeatures = features.filter((f) => Number(f.systemId) === Number(sys.id));
+
+              return (
+              <div 
+                key={sys.id} 
+                className="popular-card" 
+                onClick={() => navigate(`/systems/${sys.id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="popular-icon-wrapper" style={{ overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {(() => {
+                    if (sys.logo && FaIcons[sys.logo]) {
+                      const IconComp = FaIcons[sys.logo];
+                      return <IconComp size={24} color="#3b82f6" />;
+                    } else if (sys.logo && sys.logo.startsWith("http")) {
+                      return <img src={sys.logo} alt={sys.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
+                    } else {
+                      return <span style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#3b82f6" }}>{sys.name.charAt(0)}</span>;
+                    }
+                  })()}
                 </div>
 
                 <div className="popular-body">
-                  <h3 className="popular-card-title">{system.title}</h3>
+                  <h3 className="popular-card-title">{sys.name}</h3>
                   <div className="popular-category">
-                    <FaUserAlt className="icon-small" /> {system.category}
+                    <FaUserAlt className="icon-small" /> {sys.description && sys.description.length > 20 ? sys.description.substring(0, 20) + "..." : (sys.description || "System")}
                   </div>
                 </div>
 
                 <div className="popular-footer">
                   <div className="popular-article-count">
-                    <FaFileAlt className="icon-small" /> {system.count} artikel
+                    <FaFileAlt className="icon-small" /> {systemFeatures.length} fitur
                   </div>
                   <FaChevronRight className="icon-arrow" />
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
           <div className="public-about-buttons">
               <button
