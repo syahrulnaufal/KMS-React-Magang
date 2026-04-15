@@ -77,7 +77,7 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   background: var(--modern-bg-gradient) !important;
   position: relative;
   overflow: hidden;
-  padding: 0px 100px !important;
+  padding: 0px 80px !important;
   height: 90dvh;
   display: flex;
   justify-content: center;
@@ -338,10 +338,14 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
    HIGHLIGHTS SECTION (ACCORDION)
    ================================ */
 .petronas-highlights-section {
-  padding: 60px 80px !important;
+  padding: 60px 80px ;
   background: white !important;
 }
-
+@media (max-width: 600px) {
+  .petronas-highlights-section {
+    padding: 40px 20px;
+  }
+}
 .petronas-highlights-title {
   font-size: 2.8rem !important;
   color: var(--modern-text-dark) !important;

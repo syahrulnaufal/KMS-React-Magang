@@ -3743,10 +3743,17 @@ section.products-section-modern .product-link {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 6%;
+  padding: 0 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 520px){
+  .public-header-container{
+    padding: 0;
+    justify-content: center;
+  }
 }
 
 /* LOGO */
