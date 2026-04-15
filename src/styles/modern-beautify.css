@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 .public-header {
   position: sticky !important;
   top: 0;
-  z-index: 1000;
+  z-index: 9999 !important;
   background: var(--glass-bg) !important;
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
@@ -456,14 +456,14 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 .system-detail-wrapper {
   background-color: #f4f7fb;
   min-height: 100vh;
-  padding: 40px 0 80px 0;
+  /* padding: 40px 0 80px 0; */
   font-family: var(--font-body);
 }
 
 .system-nav-area {
-  max-width: 1100px;
-  margin: 0 auto 20px auto;
-  padding: 0 20px;
+  max-width: 100%;
+  margin-bottom: 20px ;
+  /* padding: 0 20px; */
 }
 
 .btn-back-modern {
@@ -491,19 +491,19 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 }
 
 .system-main-card {
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 100%;
   background: white;
-  border-radius: 20px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.04);
   overflow: hidden;
-  border: 1px solid #f1f5f9;
+  display: flex;
+  position: relative;
 }
 
 .system-header-modern {
   padding: 40px 40px 30px 40px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 25px;
   border-bottom: 2px solid #f1f5f9;
 }
@@ -531,7 +531,14 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 .system-badges-modern {
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
+  min-width: fit-content;
 }
+/* @media (max-width: 600px) {
+  .system-badges-modern{
+    flex-direction: column;
+  }
+} */
 
 .sys-badge-filled {
   background: #eef2ff;
@@ -543,6 +550,7 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: fit-content;
 }
 
 .sys-badge-outline {
@@ -560,7 +568,10 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 
 .system-body-modern {
   display: flex;
-  min-height: 600px;
+  flex-direction: column;
+  min-height: 100dvh;
+  margin-left: 310px; /*karena ada sidebar */
+  flex: 1;
 }
 
 .sys-sidebar {
@@ -568,6 +579,8 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   border-right: 2px solid #f1f5f9;
   background: #fcfdfe;
   padding: 30px 20px;
+  position: fixed;
+  height: 100dvh;
 }
 
 .sys-sidebar-title {
@@ -580,6 +593,64 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   margin-bottom: 25px;
   padding-left: 10px;
   letter-spacing: 0.5px;
+}
+
+.mobile-sidebar-toggle {
+  display: none;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  color: #334155;
+  width: fit-content;
+  height: fit-content;
+  aspect-ratio: 1/1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.mobile-sidebar-toggle:hover{
+  background: #f8fafc;
+}
+
+.mobile-sidebar-close {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #ef4444;
+  padding: 8px;
+}
+.mobile-sidebar-close:hover{
+  color: #b91c1c;
+}
+
+@media (max-width: 900px) {
+  .mobile-sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-sidebar-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .system-body-modern {
+    margin-left: 0 !important;
+  }
+  .sys-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.35s ease;
+    z-index: 1000;
+  }
+  .sys-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+  }
+  .system-header-modern {
+    padding: 20px;
+    gap: 15px;
+  }
 }
 
 .sys-folder {

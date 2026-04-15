@@ -3,7 +3,7 @@ import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
 import { useKnowledge } from "../context/KnowledgeContext";
 import { useState } from "react";
-import { FiArrowLeft, FiUsers, FiFileText, FiList, FiFolder, FiClock, FiCalendar, FiClipboard } from "react-icons/fi";
+import { FiArrowLeft, FiUsers, FiFileText, FiList, FiFolder, FiClock, FiCalendar, FiClipboard, FiMenu, FiX } from "react-icons/fi";
 import * as FaIcons from "react-icons/fa";
 
 import "../styles/public.css";
@@ -18,6 +18,7 @@ export default function SystemDetail() {
   const { knowledge } = useKnowledge();
 
   const [selectedFeature, setSelectedFeature] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const system = systems.find((s) => Number(s.id) === Number(id));
 
@@ -33,66 +34,82 @@ export default function SystemDetail() {
 
   return (
     <div className="system-detail-wrapper">
-      {/* HEADER NAV BACK */}
-      <div className="system-nav-area">
-        <button className="btn-back-modern" onClick={() => navigate("/systems")}>
-          <FiArrowLeft size={18} />
-          Kembali ke daftar sistem 
-        </button>
-      </div>
-
       {/* MAIN CARD CONTAINER */}
       <div className="system-main-card">
-        {/* HEADER */}
-        <div className="system-header-modern">
-          <div className="system-logo-modern" style={{ overflow: "hidden" }}>
-            {(() => {
-              if (system?.logo && FaIcons[system.logo]) {
-                const IconComp = FaIcons[system.logo];
-                return <IconComp size={42} />;
-              } else if (system?.logo) {
-                return <img src={system.logo} alt={system?.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
-              } else {
-                return <FiUsers size={42} />;
-              }
-            })()}
+        {/* HEADER NAV BACK */}
+        
+        {/* SIDEBAR TREE VIEW */}
+        <aside className={`sys-sidebar ${isSidebarOpen ? 'open' : ''}`}>
+
+          <div className="system-nav-area" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <button className="btn-back-modern" onClick={() => navigate("/systems")} style={{ marginBottom: 0 }}>
+              <FiArrowLeft size={18} />
+              Kembali
+            </button>
+            <button className="mobile-sidebar-close" onClick={() => setIsSidebarOpen(false)}>
+              <FiX size={24} />
+            </button>
           </div>
-          <div className="system-title-section">
-            <h1>{system?.name || "Sistem"}</h1>
-            <div className="system-badges-modern">
-              <span className="sys-badge-filled">
-                <FiUsers size={16}/> HR & Manajemen
-              </span>
-              <span className="sys-badge-outline">
-                <FiFileText size={16}/> {systemFeatures.length} panduan
-              </span>
-            </div>
+
+          <div className="sys-sidebar-title">
+            <FiList size={18} /> Daftar Fitur
           </div>
-        </div>
+
+          <div className="sys-subfolder-group" style={{ marginLeft: 0, paddingLeft: 0, borderLeft: 'none' }}>
+            {systemFeatures.map((f) => (
+              <div
+                key={f.id}
+                className={`sys-file-item ${
+                  selectedFeature === f.id ? "active" : ""
+                }`}
+                onClick={() => setSelectedFeature(f.id)}
+                style={{ marginLeft: 0 }}
+              >
+                <FiFileText size={14}/> {f.name}
+              </div>
+            ))}
+          </div>
+        </aside>
+
+        
 
         {/* BODY (SIDEBAR + CONTENT) */}
         <div className="system-body-modern">
-          {/* SIDEBAR TREE VIEW */}
-          <aside className="sys-sidebar">
-            <div className="sys-sidebar-title">
-              <FiList size={18} /> Daftar Fitur
-            </div>
 
-            <div className="sys-subfolder-group" style={{ marginLeft: 0, paddingLeft: 0, borderLeft: 'none' }}>
-              {systemFeatures.map((f) => (
-                <div
-                  key={f.id}
-                  className={`sys-file-item ${
-                    selectedFeature === f.id ? "active" : ""
-                  }`}
-                  onClick={() => setSelectedFeature(f.id)}
-                  style={{ marginLeft: 0 }}
-                >
-                  <FiFileText size={14}/> {f.name}
-                </div>
-              ))}
+          {/* HEADER */}
+          <div className="system-header-modern">
+            <div style={{display: "flex", gap: "15px", flex: 1, width: "100%"}}>
+            <div className="system-logo-modern" style={{ overflow: "hidden" }}>
+              {(() => {
+                if (system?.logo && FaIcons[system.logo]) {
+                  const IconComp = FaIcons[system.logo];
+                  return <IconComp size={42} />;
+                } else if (system?.logo) {
+                  return <img src={system.logo} alt={system?.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
+                } else {
+                  return <FiUsers size={42} />;
+                }
+              })()}
             </div>
-          </aside>
+            <div className="system-title-section" style={{width: "100%"}}>
+              <div style={{display: "flex", justifyContent: 'space-between', flex: 1, alignItems: "center"}}>
+                <h1>{system?.name || "Sistem"}</h1>
+                <button className="mobile-sidebar-toggle" onClick={() => setIsSidebarOpen(true)}>
+                  <FiMenu size={24} />
+                </button>
+              </div>
+              <div className="system-badges-modern">
+                <span className="sys-badge-filled">
+                  <FiUsers size={16}/> HR & Manajemen
+                </span>
+                <span className="sys-badge-outline">
+                  <FiFileText size={16}/> {systemFeatures.length} panduan
+                </span>
+              </div>
+            </div>
+            </div>
+            
+          </div>
 
           {/* MAIN CONTENT AREA */}
           <main className="sys-content-area">
