@@ -2,8 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
 import { useKnowledge } from "../context/KnowledgeContext";
-import { useState } from "react";
-import { FiArrowLeft, FiUsers, FiFileText, FiList, FiFolder, FiClock, FiCalendar, FiClipboard, FiMenu, FiX } from "react-icons/fi";
+import { useState, useMemo } from "react";
+import { FiArrowLeft, FiUsers, FiFileText, FiList, FiFolder, FiClock, FiCalendar, FiClipboard, FiMenu, FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import * as FaIcons from "react-icons/fa";
 
 import "../styles/public.css";
@@ -31,6 +31,53 @@ export default function SystemDetail() {
       item.status?.toLowerCase() === "publish" &&
       (Number(item.featureId) === Number(selectedFeature) || Number(item.feature) === Number(selectedFeature))
   );
+
+  const processedKnowledge = useMemo(() => {
+    return filteredKnowledge.map((item, itemIdx) => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(item.content || "", "text/html");
+      const headings = doc.querySelectorAll("h1, h2, h3");
+      const toc = [];
+
+      headings.forEach((heading, hIdx) => {
+        const slug = `doc-${itemIdx}-heading-${hIdx}`;
+        heading.id = slug;
+        toc.push({
+          id: slug,
+          title: heading.innerText || heading.textContent,
+          level: parseInt(heading.tagName.replace('H', ''), 10)
+        });
+      });
+
+      return {
+        ...item,
+        modifiedContent: doc.body.innerHTML,
+        toc
+      };
+    });
+  }, [filteredKnowledge]);
+
+  const globalToc = processedKnowledge.flatMap(item => item.toc);
+
+  const handleTocClick = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      // Offset accounting for sticky header
+      const yOffset = -120; 
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }
+  };
+
+  const currentIndex = systemFeatures.findIndex(f => f.id === selectedFeature);
+  const prevFeature = currentIndex > 0 ? systemFeatures[currentIndex - 1] : null;
+  const nextFeature = currentIndex !== -1 && currentIndex < systemFeatures.length - 1 ? systemFeatures[currentIndex + 1] : null;
+
+  const navigateToFeature = (featureId) => {
+    setSelectedFeature(featureId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="system-detail-wrapper">
@@ -113,51 +160,95 @@ export default function SystemDetail() {
 
           {/* MAIN CONTENT AREA */}
           <main className="sys-content-area">
-            <div className="sys-content-inner">
-              {!selectedFeature && (
-                <div className="sys-doc-empty" style={{textAlign:"center", color:"#64748b", marginTop:"40px"}}>
-                  <h3>Pilih bagian fitur di menu kiri</h3>
-                  <p>Dokumentasi detail akan ditampilkan di sini.</p>
-                </div>
-              )}
-
-              {filteredKnowledge.map((item) => (
-                <div key={item.id} className="sys-doc-container">
-                  <h1 className="sys-doc-title">{item.title}</h1>
-
-                  {/* METADATA BAR */}
-                  <div className="sys-doc-meta">
-                    <span><FiFolder size={14}/> Manajemen Karyawan / Data Master</span>
-                    <span><FiCalendar size={14}/> Diperbarui: 15 Mar 2026</span>
-                    <span><FiClock size={14}/> 5 menit</span>
+            <div className="sys-content-layout">
+              {/* BODY BLOCK */}
+              <div className="sys-content-body-area">
+                {!selectedFeature && (
+                  <div className="sys-doc-empty" style={{textAlign:"center", color:"#64748b", marginTop:"40px"}}>
+                    <h3>Pilih bagian fitur di menu kiri</h3>
+                    <p>Dokumentasi detail akan ditampilkan di sini.</p>
                   </div>
+                )}
 
-                  <p className="sys-doc-desc">
-                    Profil, dokumen, jabatan. Panduan lengkap penggunaan fitur ini.
-                  </p>
+                {processedKnowledge.map((item) => (
+                  <div key={item.id} className="sys-doc-container">
+                    <h1 className="sys-doc-title">{item.title}</h1>
 
-                  {item.thumbnail && (
-                    <div className="sys-doc-thumbnail-banner" style={{ marginBottom: "24px", borderRadius: "12px", overflow: "hidden" }}>
-                      <img 
-                        src={item.thumbnail} 
-                        alt={item.title} 
-                        style={{ width: "100%", maxHeight: "400px", objectFit: "cover", display: "block" }} 
-                      />
+                    {/* METADATA BAR */}
+                    <div className="sys-doc-meta">
+                      <span><FiFolder size={14}/> Manajemen Karyawan / Data Master</span>
+                      <span><FiCalendar size={14}/> Diperbarui: 15 Mar 2026</span>
+                      <span><FiClock size={14}/> 5 menit</span>
                     </div>
-                  )}
 
-                  <h3 className="sys-doc-heading">
-                    <FiClipboard color="#d97706" fill="#fde68a" size={24}/> Gambaran Umum
-                  </h3>
+                    <p className="sys-doc-desc">
+                      Profil, dokumen, jabatan. Panduan lengkap penggunaan fitur ini.
+                    </p>
 
-                  <div
-                    className="sys-doc-body"
-                    dangerouslySetInnerHTML={{
-                      __html: item.content,
-                    }}
-                  />
-                </div>
-              ))}
+                    {item.thumbnail && (
+                      <div className="sys-doc-thumbnail-banner" style={{ marginBottom: "24px", borderRadius: "12px", overflow: "hidden" }}>
+                        <img 
+                          src={item.thumbnail} 
+                          alt={item.title} 
+                          style={{ width: "100%", maxHeight: "400px", objectFit: "cover", display: "block" }} 
+                        />
+                      </div>
+                    )}
+
+                    <h3 className="sys-doc-heading">
+                      <FiClipboard color="#d97706" fill="#fde68a" size={24}/> Gambaran Umum
+                    </h3>
+
+                    <div
+                      className="sys-doc-body"
+                      dangerouslySetInnerHTML={{
+                        __html: item.modifiedContent,
+                      }}
+                    />
+                  </div>
+                ))}
+
+                {/* NAVIGATION BUTTONS */}
+                {selectedFeature && systemFeatures.length > 0 && (
+                  <div className="sys-doc-nav-buttons">
+                    {prevFeature ? (
+                      <button className="sys-nav-btn prev" onClick={() => navigateToFeature(prevFeature.id)}>
+                        <span className="nav-label"><FiChevronLeft size={16}/> Sebelumnya</span>
+                        <span className="nav-title">{prevFeature.name}</span>
+                      </button>
+                    ) : <div style={{flex: 1}} />}
+                    
+                    {nextFeature ? (
+                      <button className="sys-nav-btn next" onClick={() => navigateToFeature(nextFeature.id)}>
+                        <span className="nav-label">Selanjutnya <FiChevronRight size={16}/></span>
+                        <span className="nav-title">{nextFeature.name}</span>
+                      </button>
+                    ) : <div style={{flex: 1}} />}
+                  </div>
+                )}
+              </div>
+
+              {/* TOC RIGHT */}
+              {globalToc.length > 0 && (
+                <aside className="sys-toc-right">
+                  <h4 className="sys-toc-header">
+                    <FiList size={16} /> On this page
+                  </h4>
+                  <ul className="sys-toc-list">
+                    {globalToc.map((tocItem) => (
+                      <li key={tocItem.id}>
+                        <a 
+                          href={`#${tocItem.id}`} 
+                          className={`sys-toc-item level-${tocItem.level}`}
+                          onClick={(e) => handleTocClick(e, tocItem.id)}
+                        >
+                          {tocItem.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </aside>
+              )}
             </div>
           </main>
         </div>

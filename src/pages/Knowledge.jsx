@@ -125,11 +125,10 @@ export default function Knowledge() {
                         </button>
 
                         <button
-                          className="btn-action"
-                          style={{ borderColor: "red" }}
+                          className="btn-action btn-delete"
                           onClick={() => deleteKnowledge(item.id)}
                         >
-                          <Trash2 size={16} color="red" />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </td>
