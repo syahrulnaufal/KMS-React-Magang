@@ -955,8 +955,7 @@
 .sys-doc-body iframe.ql-video {
   width: 100% !important;
   max-width: 1000px;
-  max-height: 560px;
-  min-height: 350px;
+  aspect-ratio: 16 / 9;
   margin: 24px auto !important;
   display: block !important;
   border-radius: 12px;
