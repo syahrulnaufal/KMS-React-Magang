@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSystems } from "../context/SystemContext";
 import { useFeatures } from "../context/FeatureContext";
 import { useKnowledge } from "../context/KnowledgeContext";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FiArrowLeft, FiUsers, FiFileText, FiList, FiFolder, FiClock, FiCalendar, FiClipboard, FiMenu, FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import * as FaIcons from "react-icons/fa";
 
@@ -19,6 +19,7 @@ export default function SystemDetail() {
 
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeHeadingId, setActiveHeadingId] = useState('');
 
   const system = systems.find((s) => Number(s.id) === Number(id));
 
@@ -59,6 +60,31 @@ export default function SystemDetail() {
 
   const globalToc = processedKnowledge.flatMap(item => item.toc);
 
+  useEffect(() => {
+    if (globalToc.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveHeadingId(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-130px 0px -60% 0px',
+        threshold: 0
+      }
+    );
+
+    globalToc.forEach((tocItem) => {
+      const el = document.getElementById(tocItem.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [globalToc]);
+
   const handleTocClick = (e, id) => {
     e.preventDefault();
     const el = document.getElementById(id);
@@ -70,14 +96,12 @@ export default function SystemDetail() {
     }
   };
 
-  const currentIndex = systemFeatures.findIndex(f => f.id === selectedFeature);
-  const prevFeature = currentIndex > 0 ? systemFeatures[currentIndex - 1] : null;
-  const nextFeature = currentIndex !== -1 && currentIndex < systemFeatures.length - 1 ? systemFeatures[currentIndex + 1] : null;
-
-  const navigateToFeature = (featureId) => {
-    setSelectedFeature(featureId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const currentHeadingIndex = globalToc.findIndex(t => t.id === activeHeadingId);
+  const safeHeadingIndex = currentHeadingIndex !== -1 ? currentHeadingIndex : 0;
+  
+  const prevHeading = safeHeadingIndex > 0 ? globalToc[safeHeadingIndex - 1] : null;
+  const nextHeading = safeHeadingIndex < globalToc.length - 1 ? globalToc[safeHeadingIndex + 1] : null;
+  const currentHeading = globalToc[safeHeadingIndex];
 
   return (
     <div className="system-detail-wrapper">
@@ -104,15 +128,33 @@ export default function SystemDetail() {
 
           <div className="sys-subfolder-group" style={{ marginLeft: 0, paddingLeft: 0, borderLeft: 'none' }}>
             {systemFeatures.map((f) => (
-              <div
-                key={f.id}
-                className={`sys-file-item ${
-                  selectedFeature === f.id ? "active" : ""
-                }`}
-                onClick={() => setSelectedFeature(f.id)}
-                style={{ marginLeft: 0 }}
-              >
-                <FiFileText size={14}/> {f.name}
+              <div key={f.id}>
+                <div
+                  className={`sys-file-item ${
+                    selectedFeature === f.id ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedFeature(f.id)}
+                  style={{ marginLeft: 0 }}
+                >
+                  <FiFileText size={14}/> {f.name}
+                </div>
+
+                {/* INJECT TOC HERE IF ACTIVE */}
+                {selectedFeature === f.id && globalToc.length > 0 && (
+                  <ul className="sys-toc-list" style={{ marginLeft: '14px', borderLeft: '2px solid #e2e8f0', paddingLeft: '0', marginTop: '4px', marginBottom: '12px' }}>
+                    {globalToc.map((tocItem) => (
+                      <li key={tocItem.id}>
+                        <a 
+                          href={`#${tocItem.id}`} 
+                          className={`sys-toc-item level-${tocItem.level} ${activeHeadingId === tocItem.id ? 'active' : ''}`}
+                          onClick={(e) => handleTocClick(e, tocItem.id)}
+                        >
+                          {tocItem.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
@@ -209,46 +251,28 @@ export default function SystemDetail() {
                 ))}
 
                 {/* NAVIGATION BUTTONS */}
-                {selectedFeature && systemFeatures.length > 0 && (
+                {selectedFeature && globalToc.length > 0 && (
                   <div className="sys-doc-nav-buttons">
-                    {prevFeature ? (
-                      <button className="sys-nav-btn prev" onClick={() => navigateToFeature(prevFeature.id)}>
+                    {prevHeading ? (
+                      <button className="sys-nav-btn prev" onClick={(e) => handleTocClick(e, prevHeading.id)}>
                         <span className="nav-label"><FiChevronLeft size={16}/> Sebelumnya</span>
-                        <span className="nav-title">{prevFeature.name}</span>
+                        <span className="nav-title">{prevHeading.title}</span>
                       </button>
                     ) : <div style={{flex: 1}} />}
                     
-                    {nextFeature ? (
-                      <button className="sys-nav-btn next" onClick={() => navigateToFeature(nextFeature.id)}>
+                    <div className="sys-nav-current-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, color: '#64748b', fontSize: '13px', fontWeight: 500, padding: '0 20px', textAlign: 'center', lineHeight: '1.4' }}>
+                       {currentHeading ? `Sedang membaca: ${currentHeading.title}` : ''}
+                    </div>
+
+                    {nextHeading ? (
+                      <button className="sys-nav-btn next" onClick={(e) => handleTocClick(e, nextHeading.id)}>
                         <span className="nav-label">Selanjutnya <FiChevronRight size={16}/></span>
-                        <span className="nav-title">{nextFeature.name}</span>
+                        <span className="nav-title">{nextHeading.title}</span>
                       </button>
                     ) : <div style={{flex: 1}} />}
                   </div>
                 )}
               </div>
-
-              {/* TOC RIGHT */}
-              {globalToc.length > 0 && (
-                <aside className="sys-toc-right">
-                  <h4 className="sys-toc-header">
-                    <FiList size={16} /> On this page
-                  </h4>
-                  <ul className="sys-toc-list">
-                    {globalToc.map((tocItem) => (
-                      <li key={tocItem.id}>
-                        <a 
-                          href={`#${tocItem.id}`} 
-                          className={`sys-toc-item level-${tocItem.level}`}
-                          onClick={(e) => handleTocClick(e, tocItem.id)}
-                        >
-                          {tocItem.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </aside>
-              )}
             </div>
           </main>
         </div>

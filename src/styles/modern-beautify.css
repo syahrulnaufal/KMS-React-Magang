@@ -860,29 +860,10 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 .sys-content-body-area {
   flex: 1;
   min-width: 0;
+  padding-bottom: 110px; /* offset collision buffer for fixed bottom nav */
 }
 
-.sys-toc-right {
-  width: 250px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 100px;
-  align-self: flex-start;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-}
 
-.sys-toc-header {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--modern-text-dark);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
 
 .sys-toc-list {
   list-style: none;
@@ -907,9 +888,14 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   font-weight: 500;
 }
 
-.sys-toc-item:hover {
+.sys-toc-item:hover,
+.sys-toc-item.active {
   color: var(--modern-accent);
   border-left-color: var(--modern-accent);
+}
+.sys-toc-item.active {
+  font-weight: 600 !important;
+  background: linear-gradient(90deg, rgba(37,99,235,0.03) 0%, transparent 100%);
 }
 
 .sys-toc-item.level-2 {
@@ -922,12 +908,6 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   font-size: 12.5px;
 }
 
-@media (max-width: 1100px) {
-  .sys-toc-right {
-    display: none;
-  }
-}
-
 /* ===============================
    SYSTEM DETAIL NAVIGATION BUTTONS
    ================================ */
@@ -935,11 +915,17 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
 .sys-doc-nav-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
   gap: 20px;
   border-top: 1px solid #e2e8f0;
-  padding-top: 30px;
+  padding: 16px 30px;
   flex-wrap: nowrap;
+  position: fixed;
+  bottom: 0;
+  left: 310px;
+  right: 0;
+  background: white;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
 }
 
 .sys-nav-btn {
@@ -988,8 +974,19 @@ h1, h2, h3, h4, h5, h6, .public-logo-text {
   color: #0f172a;
 }
 
-/* @media (max-width: 600px) {
+@media (max-width: 900px) {
+  .sys-doc-nav-buttons {
+    left: 0;
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 600px) {
   .sys-doc-nav-buttons {
     flex-direction: column;
+    padding-bottom: 20px;
   }
-} */
+  .sys-content-body-area {
+    padding-bottom: 180px;
+  }
+}
